@@ -9,6 +9,8 @@ The addon can be installed from the Candle App Store.
 https://createcandle.github.io/homeRoughEditor/
 
 
+## Screenshots
+
 ![Screenshot](screenshot.png)
 
 ![Screenshot](screenshot.jpg)
