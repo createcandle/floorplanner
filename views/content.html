@@ -1,0 +1,1286 @@
+<div id="extension-floorplanner-content">
+	<!--
+	<div id="extension-floorplanner-first-run-hint">
+		<div>
+			<h1>🏠 Floorplanner</h1>
+			<p>This design tool allows you to draw a floorplan for your home. Start by clicking on the wall button to the left, and drawing the first room.</p>
+			<div style="text-align:right">
+				<button class="text-button" id="extension-floorplanner-accept-limitations-button">I understand</button>
+			</div>
+		</div>
+	</div>
+	-->
+		
+	<style id="extension-floorplanner-thing-styles"></style>
+		
+  <div id="extension-floorplanner-main">
+    <div id="extension-floorplanner-tool-root" class="extension-floorplanner-view-mode">
+			<div id="extension-floorplanner-svg-container-bg-image"></div>
+		  <div id="extension-floorplanner-svg-container">
+		    <svg id="extension-floorplanner-lin" class="extension-floorplanner-current-svg" viewBox="0 0 1100 700" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
+
+		      <defs>
+						<!--
+						<filter id="filter1" x="0" y="0">
+						           <feOffset result="offOut" in="SourceAlpha" dx="0" dy="0" />
+						           <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" flood-opacity="0.5"/>
+						           <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+						</filter>
+						
+						<filter id="dropshadow" x="0" y="0">
+							<feOffset result="offOut" in="SourceAlpha" dx="0" dy="0" />
+							<feDropShadow result="blurOut" in="offOut" dx="0" dy="0" stdDeviation="0.5" flood-color="cyan" flood-opacity="0.5"/>
+							<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+						</filter>
+						
+						<filter id="shadow3">
+						      <feDropShadow
+						        dx="-0.8"
+						        dy="-0.8"
+						        stdDeviation="0"
+						        flood-color="pink"
+						        flood-opacity="0.5" />
+						    </filter>
+						// -->
+							
+		        <linearGradient id="extension-floorplanner-gradientRed" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#e65d5e" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#e33b3c" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientYellow" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#FDEB71" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#F8D800" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientGreen" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#c0f7a9" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#6ce893" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientSky" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#c4e0f4" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#87c8f7" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientOrange" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#f9ad67" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#f97f00" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientWhite" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#f0f0f0" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientGrey" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#666" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#aaa" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#4f72a6" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#365987" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientPurple" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#E2B0FF" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#9F44D3" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientPink" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#f6c4dd" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#f699c7" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientBlack" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#3c3b3b" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#000000" stop-opacity="1" />
+		        </linearGradient>
+		        <linearGradient id="extension-floorplanner-gradientNeutral" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+		          <stop offset="0%" stop-color="#dbc6a0" stop-opacity="1" />
+		          <stop offset="100%" stop-color="#c69d56" stop-opacity="1" />
+		        </linearGradient>
+
+		        <pattern id="extension-floorplanner-grass" patternUnits="userSpaceOnUse" width="256" height="256">
+		          <image
+		            src="/extensions/floorplanner/images/grass.jpg"
+		            x="0" y="0" width="256" height="256" />
+		        </pattern>
+		        <pattern id="extension-floorplanner-wood" patternUnits="userSpaceOnUse" width="32" height="256">
+		          <image
+		  		  src="/extensions/floorplanner/images/planks.jpg"
+		            x="0" y="0" width="256" height="256" />
+		        </pattern>
+		        <pattern id="extension-floorplanner-tiles" patternUnits="userSpaceOnUse" width="25" height="25">
+		          <image
+		            src="/extensions/floorplanner/images/tiles.jpg"
+		            x="0" y="0" width="256" height="256" />
+		        </pattern>
+		        <pattern id="extension-floorplanner-granite" patternUnits="userSpaceOnUse" width="256" height="256">
+		          <image
+		            src="/extensions/floorplanner/images/granite.jpg"
+		            x="0" y="0" width="256" height="256" />
+		        </pattern>
+		        <pattern id="extension-floorplanner-smallGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+		          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#777" stroke-width="0.25" />
+		        </pattern>
+		        <pattern id="extension-floorplanner-grid" width="180" height="180" patternUnits="userSpaceOnUse">
+		          <rect width="180" height="180" fill="url(#extension-floorplanner-smallGrid)" />
+		          <path d="M 200 10 L 200 0 L 190 0 M 0 10 L 0 0 L 10 0 M 0 190 L 0 200 L 10 200 M 190 200 L 200 200 L 200 190"
+		            fill="none" stroke="#999" stroke-width="0.8" />
+		        </pattern>
+		        <pattern id="extension-floorplanner-hatch" width="5" height="5" patternTransform="rotate(50 0 0)" patternUnits="userSpaceOnUse">
+		          <path d="M 0 0 L 0 5 M 10 0 L 10 10 Z" style="stroke:#666;stroke-width:5;" />
+		        </pattern>
+		      </defs>
+		      <g id="extension-floorplanner-boxgrid">
+		        <rect width="8000" height="5000" x="-3500" y="-2000" fill="url(#extension-floorplanner-grid)" />
+		      </g>
+		      <g id="extension-floorplanner-boxpath"></g>
+		      <g id="extension-floorplanner-boxSurface"></g>
+		      <g id="extension-floorplanner-boxRoom"></g>
+		      <g id="extension-floorplanner-boxwall"></g>
+		      <g id="extension-floorplanner-boxcarpentry"></g>
+		      <g id="extension-floorplanner-boxEnergy"></g>
+		      <g id="extension-floorplanner-boxFurniture"></g>
+		      <g id="extension-floorplanner-boxbind"></g>
+		      <g id="extension-floorplanner-boxArea"></g>
+		      <g id="extension-floorplanner-boxRib"></g>
+		      <g id="extension-floorplanner-boxScale"></g>
+		      <g id="extension-floorplanner-boxText"></g>
+					<g id="extension-floorplanner-boxMeasure"></g>
+		      <g id="extension-floorplanner-boxDebug"></g>
+		    </svg>
+	    </div>
+
+	    <div id="extension-floorplanner-areaValue"></div>
+
+
+	    <div id="extension-floorplanner-settings" class="extension-floorplanner-leftBox">
+	      <div class="extension-floorplanner-vertical-flex-between">
+					<div>
+						<h2 style="text-align:center;display:flex;align-items:center"><span class="extension-floorplanner-unicode-icon-medium">⚙️</span> Settings</h2>
+						<br />
+			      <ul class="extension-floorplanner-list-unstyled">
+							
+							<li class="extension-floorplanner-flex-between extension-floorplanner-menu-area" style="align-items:flex-start">
+								<div>
+									<h4>Auto-save</h4>
+									<p>Normally any change you make is immediately saved.</p>
+								</div>
+								<div class="extension-floorplanner-funkyradio">
+									<input type="checkbox" id="extension-floorplanner-auto-save-checkbox" checked="">
+									<label for="extension-floorplanner-auto-save-checkbox"></label>
+								</div>
+							<li>
+							
+							<li class="extension-floorplanner-flex-between extension-floorplanner-menu-area" style="align-items:flex-start">
+								<div>
+									<h4>Continue walls</h4>
+									<p>Draw multiple lines in a row.</p>
+								</div>
+								<div class="extension-floorplanner-funkyradio">
+									<input type="checkbox" id="extension-floorplanner-multi" checked="">
+									<label for="extension-floorplanner-multi"></label>
+								</div>
+							<li>
+									
+							<li class="extension-floorplanner-flex-between extension-floorplanner-menu-area" style="align-items:flex-start">
+								<div>
+									<h4>Dark mode</h4>
+									<p>Forces the interface to use darker colors, for working at night. By default this is automatic.</p>
+								</div>
+								<div class="extension-floorplanner-funkyradio">
+									<input type="checkbox" id="extension-floorplanner-dark-mode">
+									<label for="extension-floorplanner-dark-mode"></label>
+								</div>
+							<li>
+							
+			      </ul>
+					</div>
+					
+					<div>
+						<ul class="extension-floorplanner-list-unstyled">
+			        <li>
+								<button type="button" class="extension-floorplanner-btn extension-floorplanner-btn-primary extension-floorplanner-btn-done" id="extension-floorplanner-applySettings">Done</button>
+			        </li>
+						</ul>
+					</div>
+					
+				</div>
+	    </div>
+
+
+
+
+	    
+
+
+	    <div id="extension-floorplanner-reportTools" class="extension-floorplanner-leftBox" style="width:500px;overflow-y: scroll;overflow-x: hidden;position:fixed;left:0;top:0;height:100vh;z-index:100">
+	      <h2>CALCULATOR Report plan.</h2>
+	      <br /><br />
+	      <h2 class="extension-floorplanner-toHide" id="extension-floorplanner-reportTotalSurface" style="display:none"></h2>
+	      <h2 class="extension-floorplanner-toHide" id="extension-floorplanner-reportNumberSurface" style="display:none"></h2>
+	      <hr />
+	      <div id="extension-floorplanner-reportRooms" class="extension-floorplanner-toHide" style="display:none">
+	      </div>
+	      <button class="extension-floorplanner-btn extension-floorplanner-btn-info extension-floorplanner-btn-done extension-floorplanner-fully" id="extension-floorplanner-reportTools-done-button" style="margin-top:50px">DONE</button>
+	    </div>
+			
+	    <div id="extension-floorplanner-wallTools" class="extension-floorplanner-leftBox">
+				<div class="extension-floorplanner-vertical-flex-between">
+					<div>
+			      <h2 id="extension-floorplanner-titleWallTools">Modify the wall</h2>
+			      <hr />
+			      <div id="extension-floorplanner-rangeThick">
+			        <p style="text-align:center"><span style="font-weight:bold">Width</span><span class="extension-floorplanner-show-if-developer"><br/>(<span id="extension-floorplanner-wallWidthScale"></span>)</span> </span></p>
+			        <div id="extension-floorplanner-wall-slider-container">
+								<input type="range" id="extension-floorplanner-wallWidth" step="0.1" class="extension-floorplanner-range" />
+							</div>
+							<p style="text-align:center"><span id="extension-floorplanner-wallWidthVal" style="font-weight:bold"></span> cm</p>
+			      </div>
+						<!--
+			      <ul class="extension-floorplanner-list-unstyled extension-floorplanner-show-if-developer">
+			        <div id="extension-floorplanner-cutWall">
+			          <p>Cut the wall :<br /><small>A cut will be made at each wall encountered.</small></p>
+			          <li><button id="extension-floorplanner-cutWall-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully">CUT</button></li>
+			        </div>
+
+			        <div id="extension-floorplanner-separate">
+			          <p>Separation wall :<br /><small>Transform the wall into simple separation line.</small></p>
+			          <li><button  id="extension-floorplanner-cutWall-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" onclick="floorplanEditor.invisibleWall();" id="extension-floorplanner-wallInvisible">CROP</button></li>
+			        </div>
+			        <div id="extension-floorplanner-recombine">
+			          <p>Transform to wall :<br /><small>The thickness will be identical to the last known.</small></p>
+			          <li><button  id="extension-floorplanner-cutWall-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" onclick="floorplanEditor.visibleWall();" id="extension-floorplanner-wallVisible">CROP</button></li>
+			        </div>
+			        
+			      </ul>
+						-->
+						<ul class="extension-floorplanner-list-unstyled">
+			        <li>
+								<button id="extension-floorplanner-close-wallTools-button" class="extension-floorplanner-btn extension-floorplanner-btn-info extension-floorplanner-btn-done extension-floorplanner-fully" style="margin-top:2rem">DONE</button>
+							</li>
+						</ul>
+					</div>
+					<div>
+						<ul class="extension-floorplanner-list-unstyled">
+			        <li><button class="extension-floorplanner-btn extension-floorplanner-btn-danger extension-floorplanner-fully" id="extension-floorplanner-wallTrash"><span class="extension-floorplanner-unicode-icon-large">🗑</span></button></li>
+						</ul>
+					</div>
+				</div>
+	    </div>
+
+	    <div id="extension-floorplanner-objBoundingBox" class="extension-floorplanner-leftBox">
+	      <div class="extension-floorplanner-vertical-flex-between">
+					<div>
+						<h2>Modify object</h2>
+			      
+			      <div id="extension-floorplanner-objBoundingBoxScale" class="extension-floorplanner-menu-area">
+			        <p>Width </p>
+			        <input type="range" id="extension-floorplanner-bboxWidth" step="1" class="extension-floorplanner-range" />
+			        <div class="extension-floorplanner-flex-between extension-floorplanner-scale-slider-min-max"><span id="extension-floorplanner-bboxWidthScale-min"></span><span id="extension-floorplanner-bboxWidthScale-max"></span></div>
+							<div style="text-align:center"><span id="extension-floorplanner-bboxWidthVal" class="extension-floorplanner-slider-value"></span> cm</div>
+			        
+							<div id="extension-floorplanner-scale-link-toggle-button-container"><div id="extension-floorplanner-scale-link-toggle-button"><span class="extension-floorplanner-scale-linked-true">🔗</span><span class="extension-floorplanner-scale-linked-false">┊</span></div></div>
+							<div>
+								<p>Length</p>
+				        <input type="range" id="extension-floorplanner-bboxHeight" step="1" class="extension-floorplanner-range" />
+								<div class="extension-floorplanner-flex-between extension-floorplanner-scale-slider-min-max"><span id="extension-floorplanner-bboxHeightScale-min"></span><span id="extension-floorplanner-bboxHeightScale-max"></span></div>
+								<div style="text-align:center"><span id="extension-floorplanner-bboxHeightVal" class="extension-floorplanner-slider-value"></span> cm</div>
+							</div>
+			      </div>
+				
+						<br/><br/>
+						
+			      <div id="extension-floorplanner-objBoundingBoxRotation" class="extension-floorplanner-menu-area">
+			        <p>Rotation</p>
+			        <input type="range" id="extension-floorplanner-bboxRotation" step="1" class="extension-floorplanner-range" min="-180" max="180" />
+							<div class="extension-floorplanner-flex-between extension-floorplanner-scale-slider-min-max"><span>-180</span><span>180</span></div>
+							<div style="text-align:center"><span id="extension-floorplanner-bboxRotationVal" class="extension-floorplanner-slider-value"></span> °</div>
+			      </div>
+
+						<div class="extension-floorplanner-show-if-developer">
+				      <div id="extension-floorplanner-stepsCounter" style="display:none;">
+				        <p><span id="extension-floorplanner-bboxSteps">Steps (2-15): <span id="extension-floorplanner-bboxStepsVal">0</span></span></p>
+								<div class="extension-floorplanner-flex-between">
+									<button class="extension-floorplanner-btn extension-floorplanner-btn-info" id="extension-floorplanner-bboxStepsMinus">-</button>
+				        	<button class="extension-floorplanner-btn extension-floorplanner-btn-info" id="extension-floorplanner-bboxStepsAdd">+</button>
+								</div>
+				      </div>
+						</div>
+
+			      <div id="extension-floorplanner-objBoundingBoxColor" style="display:none">
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientRed"
+			          style="color:#f55847;background:linear-gradient(30deg, #f55847, #f00);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientYellow"
+			          style="color:#e4c06e;background:linear-gradient(30deg,#e4c06e, #ffb000);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientGreen"
+			          style="color:#88cc6c;background:linear-gradient(30deg,#88cc6c, #60c437);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientSky"
+			          style="color:#77e1f4;background:linear-gradient(30deg,#77e1f4, #00d9ff);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientBlue"
+			          style="color:#4f72a6;background:linear-gradient(30deg,#4f72a6, #284d7e);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientGrey"
+			          style="color:#666666;background:linear-gradient(30deg,#666666, #aaaaaa);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientWhite"
+			          style="color:#fafafa;background:linear-gradient(30deg,#fafafa, #eaeaea);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientOrange"
+			          style="color:#f9ad67;background:linear-gradient(30deg, #f9ad67, #f97f00);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientPurple"
+			          style="color:#a784d9;background:linear-gradient(30deg,#a784d9, #8951da);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientPink"
+			          style="color:#df67bd;background:linear-gradient(30deg,#df67bd, #e22aae);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientBlack"
+			          style="color:#3c3b3b;background:linear-gradient(30deg,#3c3b3b, #000000);"></div>
+			        <div class="extension-floorplanner-color textEditorColor" data-type="gradientNeutral"
+			          style="color:#e2c695;background:linear-gradient(30deg,#e2c695, #c69d56);"></div>
+			        <div style="clear:both"></div>
+			      </div>
+
+			      <br /><br />
+			      <button id="extension-floorplanner-clone-button" class="extension-floorplanner-btn extension-floorplanner-btn-info"
+			        ><span class="extension-floorplanner-unicode-icon-medium">⎘</span>&nbsp;Clone</button>
+							
+					  <br/><br/>
+			      <button  id="extension-floorplanner-save-object-button" class="extension-floorplanner-btn extension-floorplanner-btn-info extension-floorplanner-btn-done"
+			        >DONE</button>
+					</div>
+				
+					<div>
+						<ul class="extension-floorplanner-list-unstyled">
+			        <li><button class="extension-floorplanner-btn extension-floorplanner-btn-danger extension-floorplanner-fully" id="extension-floorplanner-bboxTrash"><span class="extension-floorplanner-unicode-icon-large">🗑</span></button></li>
+						</ul>
+					</div>
+					
+				</div>
+				
+	    </div>
+
+
+
+
+	    <div id="extension-floorplanner-objTools" class="extension-floorplanner-leftBox">
+	      <div class="extension-floorplanner-vertical-flex-between">
+					<div>
+						<h2>Modify door/window</h2>
+						<br />
+			      <ul class="extension-floorplanner-list-unstyled">
+							<li>
+			        	<p style="text-align:center;font-weight:bold">Width</p>
+			        	<input type="range" id="extension-floorplanner-doorWindowWidth" step="1" class="extension-floorplanner-range" />
+								<div class="extension-floorplanner-flex-between extension-floorplanner-scale-slider-min-max"><span id="extension-floorplanner-doorWindowWidthScale-min"></span><span id="extension-floorplanner-doorWindowWidthScale-max"></span></div>
+								<div style="text-align:center"><span id="extension-floorplanner-doorWindowWidthVal" class="extension-floorplanner-slider-value"></span> cm</div>
+							<li>
+								
+							<li><br/><br/><button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" id="extension-floorplanner-objToolsHinge">Reverse hinges</button></li>
+		        
+			        <li><button id="extension-floorplanner-modify-door-button"  class="extension-floorplanner-btn extension-floorplanner-btn-info extension-floorplanner-btn-done" style="margin-top:100px"
+			            >DONE</button></li>
+			      </ul>
+					</div>
+					<div>
+						<ul class="extension-floorplanner-list-unstyled">
+			        <li><button class="extension-floorplanner-btn extension-floorplanner-btn-danger extension-floorplanner-fully extension-floorplanner-objTrash"><span class="extension-floorplanner-unicode-icon-large">🗑</span></button>
+			        </li>
+						</ul>
+					</div>
+				</div>
+	    </div>
+
+
+	    <div id="extension-floorplanner-roomTools" class="extension-floorplanner-leftBox">
+				<div class="extension-floorplanner-vertical-flex-between">
+	      	<div>
+						<h2>Room</h2>
+						
+						<div class="extension-floorplanner-show-if-developer">
+				      <input type="hidden" id="extension-floorplanner-roomName" value="" />
+				      Name:
+							<br />
+				      <select class="extension-floorplanner-form-select" aria-label="Default select example" id="extension-floorplanner-roomLabel">
+				        <option selected value="0">None</option>
+				        <option value="1">Lounge</option>
+								<option value="51">Living room</option>
+				        <option value="2">Lunchroom</option>
+				        <option value="3">Kitchen</option>
+								<option value="23">Pantry</option>
+								<option value="52">Dining room</option>
+				        <option value="4">Toilet</option>
+								<option value="14">Toilet 2</option>
+				        <option value="5">Bathroom</option>
+								<option value="13">Bathroom 2</option>
+				        <option value="6">Bedroom</option>
+				        <option value="7">Bedroom 2</option>
+				        <option value="8">Bedroom 3</option>
+				        <option value="15">Bedroom 4</option>
+				        <option value="16">Bedroom 5</option>
+				        <option value="9">Locker</option>
+				        <option value="10">Office</option>
+				        <option value="11">Hall</option>
+								<option value="19">Corridor</option>
+				        <option value="12">Loggia</option>
+				        <option value="17">Balcony</option>
+								<option value="21">Balcony 2</option>
+				        <option value="18">Terrace</option>
+								<option value="46">Shed</option>
+				        <option value="20">Garage</option>
+								<option value="21">Garden</option>
+				        <option value="22">Clearance</option>
+								<option value="24">Porch</option>
+								<option value="25">Playroom</option>
+								<option value="26">Mezzanine</option>
+								<option value="27">Cellar</option>
+								<option value="28">Doghouse</option>
+								<option value="29">Treehouse</option>
+								<option value="30">Dock</option>
+								<option value="31">Utility room</option>
+								<option value="32">Heating</option>
+								<option value="33">Pool</option>
+								<option value="34">Serre</option>
+								<option value="35">Waiting room</option>
+								<option value="36">Guest room</option>
+								<option value="48">Foyer</option>
+								<option value="37">Bar</option>
+								<option value="38">Cinema</option>
+								<option value="63">Game room</option>
+								<option value="39">Storage</option>
+								<option value="40">Storage 2</option>
+								<option value="47">Cold storage</option>
+								<option value="41">Veranda</option>
+								<option value="42">Front garden</option>
+								<option value="43">Rear garden</option>
+								<option value="44">Firepit</option>
+								<option value="45">Playground</option>
+								<option value="46">Parking</option>
+								<option value="49">Workshop</option>
+								<option value="50">Kitchenette</option>
+								<option value="53">Reception</option>
+								<option value="54">Family room</option>
+								<option value="55">Sun room</option>
+								<option value="56">Library</option>
+								<option value="57">Closet</option>
+								<option value="58">Laundry room</option>
+								<option value="59">Attic</option>
+								<option value="60">Broom closet</option>
+								<option value="61">Linnen closet</option>
+								<option value="62">Nursery</option>
+								<option value="64">Meeting room</option>
+								<option value="65">Loft</option>
+								<option value="66">Gym</option>
+								<option value="67">Den</option>
+								<option value="68">Staircase</option>
+								<option value="69">Elevator</option>
+								<option value="70">Powder room</option>
+								<option value="71">Dressing room</option>
+								<option value="72">En suite</option>
+								<option value="73">Meditation space</option>
+								<option value="74">Billiards Room</option>
+								<option value="75">Spa</option>
+								<option value="76">Media room</option>
+								<option value="77">Studio</option>
+								<option value="78">Study</option>
+								<option value="79">Nook</option>
+								<option value="80">Cave</option>
+								<option value="81">Pet room</option>
+								<option value="82">Safe room</option>
+								<option value="83">Conservatory</option>
+								<option value="84">Observatory</option>
+								<option value="85">Shrine</option>
+								<option value="86">Crawl space</option>
+								<option value="87">Keeping room</option>
+								<option value="88">Great room</option>
+								<option value="89">Music room</option>
+								<option value="90">Mud room</option>
+								<option value="91">Server room</option>
+								<option value="92">Solarium</option>
+								<option value="93">Sauna</option>
+								<option value="94">Dark room</option>
+								<option value="95">Deck</option>
+								<option value="96">Greenhouse</option>
+								<option value="97">Gazebo</option>
+								<option value="98">Wood shed</option>
+								<option value="99">Dry room</option>
+								<option value="100">Boiler room</option>
+								<option value="101">Classroom</option>
+								<option value="102">Observation room</option>
+								<option value="103">Observation deck</option>
+								<option value="104">Boat house</option>
+								<option value="105">Back room</option>
+								<option value="106">Patio</option>
+								<option value="107">Bike shed</option>
+								<option value="108">Smoking room</option>
+								<option value="109">Garbage room</option>
+								<option value="110">Freezer</option>
+								<option value="111">Breakfast room</option>
+								<option value="112">Guest suite</option>
+								<option value="113">Rooftop</option>
+								<option value="114">Crafts room</option>
+								<option value="115">Panic room</option>
+								<option value="116">Half bath</option>
+								<option value="117">Ritual room</option>
+								<option value="118">Shoe closet</option>
+								<option value="119">Outdoor seating</option>
+								<option value="120">Orchard</option>
+								<option value="121">Driveway</option>
+								<option value="122">Secret room</option>
+								<option value="123">Vegetable garden</option>
+								<option value="124">Outhouse</option>
+								<option value="125">Composting</option>
+								<option value="126">Kennel</option>
+								<option value="127">Stable</option>
+								<option value="128">Kennel</option>
+								<option value="129">Minarette</option>
+								<option value="130">Cupola</option>
+								<option value="131">Enfilade</option>
+								<option value="132">Fireplace</option>
+								<option value="133">Tower</option>
+								<option value="134">Dormer</option>
+								<option value="135">Nook</option>
+								<option value="136">Guard house</option>
+							
+				      </select>
+			      </div>
+						
+						<div class="extension-floorplanner-hidden">
+							<span style="color:#08d">Room</span>
+							<br/>
+							Estimated a surface of:<br /><b><span class="extension-floorplanner-size"></span></b>
+				      <br />
+							<br />
+				      <p>If you know the actual area, enter it here</p>
+				      <div class="extension-floorplanner-input-group">
+				        <input type="text" class="extension-floorplanner-form-control" id="extension-floorplanner-roomSurface" placeholder="Real surface area" aria-describedby="basic-addon2">
+				        <span class="extension-floorplanner-input-group-addon" id="extension-floorplanner-basic-addon2">m²</span>
+				      </div>
+				      <br />
+				      <br />
+				      <br />
+				      Meter:
+				      <div class="extension-floorplanner-funkyradio">
+				        <div class="extension-floorplanner-funkyradio-success">
+				          <input type="checkbox" name="roomShow" value="showSurface" id="extension-floorplanner-seeArea" checked />
+				          <label for="extension-floorplanner-seeArea">Show the surface</label>
+				        </div>
+				      </div>
+				      <div class="extension-floorplanner-funkyradio">
+				        <div class="extension-floorplanner-funkyradio-success">
+				          <input type="radio" name="roomAction" id="extension-floorplanner-addAction" value="add" checked />
+				          <label for="extension-floorplanner-addAction">Add the surface</label>
+				        </div>
+				        <div class="extension-floorplanner-funkyradio-warning">
+				          <input type="radio" name="roomAction" id="extension-floorplanner-passAction" value="pass" />
+				          <label for="extension-floorplanner-passAction">Ignore the surface</label>
+				        </div>
+				      </div>
+				      <hr />
+						</div>
+
+			      	<p>Background</p>
+							<div class="extension-floorplanner-flex-between extension-floorplanner-flex-wrap">
+				      <div class="extension-floorplanner-roomColor" data-type="gradientRed" style="background:linear-gradient(30deg, #f55847, #f00);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientYellow" style="background:linear-gradient(30deg,#e4c06e, #ffb000);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientGreen" style="background:linear-gradient(30deg,#88cc6c, #60c437);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientSky" style="background:linear-gradient(30deg,#77e1f4, #00d9ff);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientBlue" style="background:linear-gradient(30deg,#4f72a6, #284d7e);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientGrey" style="background:linear-gradient(30deg,#666666, #aaaaaa);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientWhite" style="background:linear-gradient(30deg,#fafafa, #eaeaea);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientOrange" style="background:linear-gradient(30deg, #f9ad67, #f97f00);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientPurple" style="background:linear-gradient(30deg,#a784d9, #8951da);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientPink" style="background:linear-gradient(30deg,#df67bd, #e22aae);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientBlack" style="background:linear-gradient(30deg,#3c3b3b, #000000);"></div>
+				      <div class="extension-floorplanner-roomColor" data-type="gradientNeutral" style="background:linear-gradient(30deg,#e2c695, #c69d56);"></div>
+						</div>
+						
+						<div class="extension-floorplanner-show-if-developer">
+							<br /><br />
+				      <p>Materials</p>
+				      <div class="extension-floorplanner-roomColor" data-type="wood"
+				        style="background: url('/extensions/floorplanner/images/planks.jpg');">
+				      </div>
+				      <div class="extension-floorplanner-roomColor" data-type="tiles"
+				        style="background: url('/extensions/floorplanner/images/tiles.jpg');">
+				      </div>
+				      <div class="extension-floorplanner-roomColor" data-type="granite"
+				        style="background: url('/extensions/floorplanner/images/granite.jpg');">
+				      </div>
+				      <div class="extension-floorplanner-roomColor" data-type="grass"
+				        style="background: url('/extensions/floorplanner/images/grass.jpg');">
+				      </div>
+				      <div data-type="#ff008a" style="clear:both"></div>
+				      <br /><br />
+				      <input type="hidden" id="extension-floorplanner-roomBackground" value="gradientNeutral" />
+				      <input type="hidden" id="extension-floorplanner-roomIndex" value="" />
+							
+				      <button id="extension-floorplanner-applySurface" type="button" class="extension-floorplanner-btn extension-floorplanner-btn-primary extension-floorplanner-btn-done">Apply</button><br/><br/>
+						</div>
+						
+						<br/>
+						<br/>
+			      <br />
+					</div>
+					<div>
+						<button id="extension-floorplanner-resetRoomTools" type="button" class="extension-floorplanner-btn extension-floorplanner-btn-danger">Cancel</button>
+					</div>
+				</div>
+	    </div>
+
+
+	    <div id="extension-floorplanner-panel" class="extension-floorplanner-leftBox">
+				<div id="extension-floorplanner-panel-scroller">
+		      <ul class="extension-floorplanner-list-unstyled">
+		        <li class="extension-floorplanner-flex-between"><button class="extension-floorplanner-btn extension-floorplanner-disabled extension-floorplanner-halfy" id="extension-floorplanner-undo" title="undo"><span>↺</span></button>
+		            <button class="extension-floorplanner-btn extension-floorplanner-disabled extension-floorplanner-halfy extension-floorplanner-pull-right" id="extension-floorplanner-redo" title="redo"><span>↻</span></button>
+		        </li>
+
+		        <li><button class="extension-floorplanner-btn extension-floorplanner-btn-success extension-floorplanner-fully" id="extension-floorplanner-select_mode" title="Select objects"><img src="/extensions/floorplanner/images/mouse_cursor.svg" alt="select" style="width:60%;opacity:.9"/><!--<span>◄</span>--></button></li>
+
+		        <li id="extension-floorplanner-wall-buttons">
+							<div class="extension-floorplanner-vertical-shrinker2">
+								<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" id="extension-floorplanner-line_mode" data-toggle="tooltip"
+									data-placement="right" title="Make walls"><img src="/extensions/floorplanner/images/wall.svg" alt="Wall" title="Wall" style="opacity:.85;width:70%"/></button>
+			          <!--
+								<button class="extension-floorplanner-mt-2 extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-show-if-room extension-floorplanner-shadow extension-floorplanner-fully" id="extension-floorplanner-partition_mode"
+			            data-toggle="tooltip" data-placement="right" title="Make room dividers (small walls)"><span class="extension-floorplanner-unicode-icon-medium">━</span></button>-->
+								<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" id="extension-floorplanner-partition_mode" data-toggle="tooltip"
+									data-placement="right" title="Make room dividers (small walls)"><img src="/extensions/floorplanner/images/internal_wall.svg" alt="Wall" title="Wall" style="opacity:.85;width:50%"/></button>
+							</div>
+							
+							<!--
+							<div id="extension-floorplanner-multi-container" class="extension-floorplanner-funkyradio extension-floorplanner-flex-between" title="Draw multiple lines in a row">
+								<div id="extension-floorplanner-multi-container-zigzag"><span>⦚</span></div>
+		            <div class="extension-floorplanner-funkyradio-success">
+		              <input type="checkbox" id="extension-floorplanner-multi" checked />
+		              <label for="extension-floorplanner-multi"></label>
+		            </div>
+		          </div>
+							// -->
+		        </li>
+
+						<li>
+							<div class="extension-floorplanner-vertical-shrinker">
+								<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" id="extension-floorplanner-node_mode" title="Cut walls, giving them an extra joint to move"><span class="extension-floorplanner-unicode-icon-medium">✂</span></button>
+		        		<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" id="extension-floorplanner-distance_mode" data-toggle="tooltip" data-placement="right"
+		                 title="Add a measurement"><div class="extension-floorplanner-tape-measure-icon"></div><div class="extension-floorplanner-tape-measure-icon-end"></div></button>
+						</li>
+						
+						
+						
+		        <li class="extension-floorplanner-show-if-room">
+							<div class="extension-floorplanner-vertical-shrinker">
+								<button id="extension-floorplanner-door_mode" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+		                  title="Add a door to a wall"><span class="extension-floorplanner-unicode-icon-large">🚪</span></button>
+
+		        		<button id="extension-floorplanner-window_mode" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+		                  title="Add a window to a wall"><span class="extension-floorplanner-unicode-icon-large">🪟</span></button>
+							</div>
+						</li>
+        
+						<li class="extension-floorplanner-show-if-room">
+							<div class="extension-floorplanner-vertical-shrinker">
+								<!--<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-stair_mode"
+				              onclick="hide_submenus();" title="Add a staircase"><span class="extension-floorplanner-unicode-icon-large">🪜</span></button>-->
+								<button id="extension-floorplanner-stair_mode" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully extension-floorplanner-object"
+				              title="Add a staircase"><img src="/extensions/floorplanner/images/stairs.svg" alt="Stairs" title="Stairs" style="opacity:.85;width:70%"></button>
+				        <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" id="extension-floorplanner-room_mode" title="Give rooms a background color"><span class="extension-floorplanner-unicode-icon-large">🎨</span></button>
+							</div>
+						</li>
+						
+		        <li class="extension-floorplanner-show-if-room">
+							<div class="extension-floorplanner-vertical-shrinker3">
+								<button id="extension-floorplanner-object_mode" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+		            	   ><span class="extension-floorplanner-unicode-icon-large">🛋</span></button>
+								<button id="extension-floorplanner-text_mode" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" data-toggle="tooltip" data-placement="right"
+									   title="Add text"><span class="extension-floorplanner-unicode-icon-large" style="font-family:'serif'">A</span></button>
+							</div>
+						</li>
+		        <!-- <li><button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" id="extension-floorplanner-object_mode" onclick="hide_submenus();document.querySelector('#extension-floorplanner-object_list').style.display='block';">FURNITURE</button></li> -->
+
+						<!--
+		    		<li class="extension-floorplanner-show-if-room">
+							<button id="extension-floorplanner-show-things-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+		                ><span style="display:inline-block;">𓃌</span> Things</button></li>
+						// -->		
+
+		    		<li class="extension-floorplanner-show-if-room">
+							<button id="extension-floorplanner-layer_mode" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+		                ><span style="display:inline-block;transform:rotate(90deg)">〣</span> Layers</button></li>
+		
+						
+
+		        <li class="extension-floorplanner-show-if-room">
+							<button id="extension-floorplanner-report_mode" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-show-if-developer" title="Show report">📊 Report</button>
+						</li>
+				
+		        <li class="extension-floorplanner-flex-between">
+							<label id="extension-floorplanner-upload-background-image-label" for="extension-floorplanner-upload-background-image"  title="Upload a background image to trace over">
+							  <input type="file" id="extension-floorplanner-upload-background-image" name="background-image" style="display:none"/>
+							  <span class="extension-floorplanner-unicode-icon-medium" >⤒</span>
+							</label>
+							<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow" id="extension-floorplanner-svg-download-button" title="Download as .svg file"><!--<span class="extension-floorplanner-unicode-icon-medium" style="font-weight:bold">⤓</span>--><u class="extension-floorplanner-unicode-icon-medium" >⤓</u></button>
+		        <li>
+					
+					
+		        <li class="extension-floorplanner-show-if-room">
+							<div class="extension-floorplanner-vertical-shrinker4">
+								<button id="extension-floorplanner-save-to-floorplans" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+		            	   style="margin-bottom:0"><span class="extension-floorplanner-unicode-icon-large">💾</span></button>
+								<button id="extension-floorplanner-save-as-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+										>Save as</button>
+							</div>
+						</li>
+					
+				    <li><button id="extension-floorplanner-new-file-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+				          	><span>📁</span> New</button></li>
+							
+						<li><button id="extension-floorplanner-clear-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully extension-floorplanner-show-if-developer" 
+							   		><span>❌</span> Clear</button></li>
+
+						<li><button id="extension-floorplanner-delete-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+							     	><span>🗑</span> Delete</button></li>
+										
+							  
+
+						
+						<li>
+							<button id="extension-floorplanner-start-fullscreen-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully extension-floorplanner-pull-right"
+		                id="extension-floorplanner-full_mode" title="Full screen"><span class="extension-floorplanner-unicode-icon-medium"><sup>⇱</sup><sub>⇲</sub></span></button>
+		          <button id="extension-floorplanner-exit-fullscreen-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully extension-floorplanner-pull-right" style="display:none"
+		                id="extension-floorplanner-nofull_mode" data-toggle="tooltip" data-placement="right" title="Full screen"><span class="extension-floorplanner-unicode-icon-medium" style="transform:rotate(-90deg);display:inline-block"><sup>⇲</sup><sub>⇱</sub></span></button>
+						</li>
+
+		        <li>
+							<div class="extension-floorplanner-vertical-shrinker">
+								<button id="extension-floorplanner-show-floorplanner-settings" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+									 	><span>⚙️</span><span class="extension-floorplanner-button-text"> Settings</span></button>
+
+								<button id="extension-floorplanner-print-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+										><span>🖨</span><span class="extension-floorplanner-button-text"> Print</span></button>
+							</div>
+						</li>
+
+						
+
+						<li><button id="extension-floorplanner-stop-floorplanner" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully" 
+            	  	><span class="extension-floorplanner-unicode-icon-large">🏁</span> Stop</button>
+						</li>
+
+
+						<li><button id="extension-floorplanner-debug-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully extension-floorplanner-show-if-developer" 
+            	  	><span class="extension-floorplanner-unicode-icon-large">🦎</span> Debug</button>
+						</li>
+						<li><button id="extension-floorplanner-debug2-button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-fully extension-floorplanner-show-if-developer" 
+            	  	><span class="extension-floorplanner-unicode-icon-large">🐠</span> Forget</button>
+						</li>
+						
+
+		      </ul>
+	      </div>
+				
+	    </div>
+
+
+
+			<div id="extension-floorplanner-panel-level2">
+        <div id="extension-floorplanner-door_list" class="extension-floorplanner-list-unstyled extension-floorplanner-sub">
+          <button class="extension-floorplanner-btn extension-floorplanner-fully extension-floorplanner-door" data-type="aperture" id="extension-floorplanner-aperture"><img src="/extensions/floorplanner/images/door_opening.svg" class="extension-floorplanner-sub-icon">Opening</button>
+          <button class="extension-floorplanner-btn extension-floorplanner-fully extension-floorplanner-door" data-type="simple" id="extension-floorplanner-simple"><img src="/extensions/floorplanner/images/door_simple.svg" class="extension-floorplanner-sub-icon">Simple</button>
+          <button class="extension-floorplanner-btn extension-floorplanner-fully extension-floorplanner-door" data-type="double" id="extension-floorplanner-double"><img src="/extensions/floorplanner/images/door_double.svg" class="extension-floorplanner-sub-icon">Double</button>
+          <button class="extension-floorplanner-btn extension-floorplanner-fully extension-floorplanner-door" data-type="pocket" id="extension-floorplanner-pocket"><img src="/extensions/floorplanner/images/door_pocket.svg" class="extension-floorplanner-sub-icon">Pocket</button>
+        </div>
+				
+        <div id="extension-floorplanner-window_list" class="extension-floorplanner-list-unstyled extension-floorplanner-sub">
+          <button class="extension-floorplanner-btn extension-floorplanner-fully extension-floorplanner-window" id="extension-floorplanner-fix"><img src="/extensions/floorplanner/images/window_fixed.svg" class="extension-floorplanner-sub-icon">Fixed</button>
+          <button class="extension-floorplanner-btn extension-floorplanner-fully extension-floorplanner-window" id="extension-floorplanner-flap"><img src="/extensions/floorplanner/images/window_simple.svg" class="extension-floorplanner-sub-icon">Simple</button>
+          <button class="extension-floorplanner-btn extension-floorplanner-fully extension-floorplanner-window" id="extension-floorplanner-twin"><img src="/extensions/floorplanner/images/window_double.svg" class="extension-floorplanner-sub-icon">Double</button>
+          <button class="extension-floorplanner-btn extension-floorplanner-fully extension-floorplanner-window" id="extension-floorplanner-bay"><img src="/extensions/floorplanner/images/window_slide.svg" class="extension-floorplanner-sub-icon">Slide</button>
+        </div>
+				
+        <div id="extension-floorplanner-energy_list" class="extension-floorplanner-list-unstyled extension-floorplanner-sub">
+					<!--
+          <h2 style="text-align:center"><span class="extension-floorplanner-unicode-icon-large">🛋️</span> Add items</h2>
+					// -->
+			
+			
+					<div>
+						<p>Furniture</p>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-bed">🛏 Single bed</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-double-bed">🛏 Double bed</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-closet">◫ Closet</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-couch">🛋️ Couch</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-sofa-seat">💺 Sofa seat</button>
+						
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-tv">📺 TV</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-stove">𓃌 Stove</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-sink">🚰 Sink</button>
+						
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-toilet">🚽 Toilet</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-shower">🚿 Shower</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-roofLight">💡 Ceiling lamp</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-wallLight">💡 Wall light</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-standing-lamp">💡 Standing lamp</button>
+						
+					</div>
+					
+					<div>
+						<p>Plants</p>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-plant">𖧷 Plant</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-flower">✿ Flower</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-leaf">🌿 Leaf</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-tree">🌳 Tree</button>
+					</div>
+					
+					
+          <div>
+						<p>Geometric shapes</p>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-circle">◌ Circle</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-half-circle">◖ Half circle</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-square">□ Square</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-crossed-square">⊠ Crossed square</button>
+						
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-rounded-square">□ Rounded square</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-dome">ᑎ Dome</button>
+				
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-triangle">▲ Triangle</button>
+						
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-star">★ Star</button>
+						
+						<!--
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-button1">◘ Button</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-button2">◙ Button</button>
+						-->
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-pill">💊 Pill shape</button>
+          </div>
+			
+			
+					<div>
+						<p>Specific shapes</p>
+						
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-stairs-corner">◴⏎ Stairs corner</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-eye">👁 Eye</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-paw">🐾 Paw</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-note">♪ Audio</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-wifi">⌔ Wifi</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-heart">♥ Heart</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-lock">🔒 Lock</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-droplet">💧 Water</button>
+					</div>
+					
+					
+					
+			
+          <div>
+            <p>Wall plugs</p>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-plug">⚇ Electrical outlet</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-www">🌐 Internet access</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-rj45">⧈ RJ45 plug</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-tv-plug">ᛉ Antenna plug</button>
+          </div>
+			
+					<!--
+          <div class="extension-floorplanner-show-if-developer">
+            <p>Energy</p>
+            <div>
+              <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object extension-floorplanner-show-if-developer" id="extension-floorplanner-gtl">Switchboard</button>
+              <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object extension-floorplanner-show-if-developer" id="extension-floorplanner-switch">Switch</button>
+              <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object extension-floorplanner-show-if-developer" id="extension-floorplanner-doubleSwitch">Multiways</button>
+              <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object extension-floorplanner-show-if-developer" id="extension-floorplanner-dimmer">◌ Variator</button>
+              <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object extension-floorplanner-show-if-developer" id="extension-floorplanner-plug20">Outlet 20A</button>
+              <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object extension-floorplanner-show-if-developer" id="extension-floorplanner-plug32">Outlet 32A</button>
+            </div>
+          </div>
+          -->
+
+          <div>
+            <p>Heating & Cooling</p>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object extension-floorplanner-hidden" id="extension-floorplanner-boiler">🫠 Boiler</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-heater">◍ Boiler</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-radiator">▥ Radiator</button>
+          </div>
+
+					
+          <div>
+            <p>Fire</p>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-arrow">→ Arrow</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-line-with-dot">⊸ Ball line</button>
+            <button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-red-rectangle">🟥 Red rectangle</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-fire-extinguisher">🧯 Fire extinguisher</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-fire-hose">꩜ Fire hose</button>
+						
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-fire-exit">⌫ Fire exit</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-fire-exit2">🏃 Fire exit</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-meeting-point">🚩 Meeting point</button>
+          </div>
+					
+
+          <div>
+            <p>Outside</p>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-car">🚗 Car</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-fully extension-floorplanner-object" id="extension-floorplanner-pond">🌊 Pond</button>
+          </div>
+
+
+        </div>
+				
+				
+        <div id="extension-floorplanner-layer_list">
+          
+					<div id="extension-floorplanner-object_list" class="extension-floorplanner-list-unstyled extension-floorplanner-subx">
+						
+					</div>
+					
+					<div id="extension-floorplanner-layer_list-checkboxes" class="extension-floorplanner-list-unstyled extension-floorplanner-subx">
+						<div class="extension-floorplanner-funkyradio">
+	            <div class="extension-floorplanner-funkyradio-info">
+	              <input type="checkbox" id="extension-floorplanner-showRib" checked />
+	              <label for="extension-floorplanner-showRib"></label>
+	            </div>
+							<div class="extension-floorplanner-funkyradio-info-icon"><span class="extension-floorplanner-unicode-icon-medium">📐</span></div>
+	          </div>
+						<!--
+	          <div class="extension-floorplanner-funkyradio" style="font-size:0.8em">
+	            <div class="extension-floorplanner-funkyradio-info">
+	              <input type="checkbox" id="extension-floorplanner-showArea" checked />
+	              <label for="extension-floorplanner-showArea">Surface area</label>
+	            </div>
+	          </div>
+						-->
+	          <div class="extension-floorplanner-funkyradio" title="Show or hide Background colors">
+	            <div class="extension-floorplanner-funkyradio-info">
+	              <input type="checkbox" id="extension-floorplanner-showLayerRoom" checked />
+	              <label for="extension-floorplanner-showLayerRoom"></label>
+	            </div>
+							<div class="extension-floorplanner-funkyradio-info-icon"><span class="extension-floorplanner-unicode-icon-medium">🎨</span></div>
+	          </div>
+	          <div class="extension-floorplanner-funkyradio">
+	            <div class="extension-floorplanner-funkyradio-info">
+	              <input type="checkbox" id="extension-floorplanner-showLayerEnergy" checked />
+	              <label for="extension-floorplanner-showLayerEnergy"></label>
+	            </div>
+							<div class="extension-floorplanner-funkyradio-info-icon"><span class="extension-floorplanner-unicode-icon-medium">🛋</span></div>
+	          </div>
+					</div>
+					
+        </div>
+										
+			</div>
+
+
+			<ul id="extension-floorplanner-floorplans-list">
+			
+			</ul>
+			
+			
+			
+	    <div id="extension-floorplanner-things-container">
+	      <div class="extension-floorplanner-vertical-flex-between" style="justify-content:flex-start;">
+					<div>
+						<h2><!--<img src="/extensions/candle-theme/images/thing-details-link.svg"/>-->Things</h2>
+						<p>Scale</p>
+		        <div id="extension-floorplanner-thing-icons-scale-container">
+							<input type="range" id="extension-floorplanner-thing-icons-size" step="1" min="1" max="6" value="3" class="extension-floorplanner-range"/>
+						</div>
+						<p>Visible:</p>
+					</div>
+					<div id="extension-floorplanner-things-list-wrapper">
+			      <ul id="extension-floorplanner-things-list">
+			      </ul>
+					</div>
+				</div>
+	    </div>
+			
+			
+
+
+			<div id="extension-floorplanner-modals-container">
+		    <div class="extension-floorplanner-modal extension-floorplanner-fade " id="extension-floorplanner-newFileModal" tabindex="-1" role="dialog" aria-labelledby="newFileModalLabel">
+		      <div class="extension-floorplanner-modal-dialog modal-lg  modal-dialog-centered" role="document">
+		        <div class="extension-floorplanner-modal-content" style="text-align:center">
+		          <div class="extension-floorplanner-modal-header">
+		            <h2 class="extension-floorplanner-modal-title" id="extension-floorplanner-newFileModalLabel">📃 Start a new floorplan</h2>
+								<p id="extension-floorplanner-plan-exists-warning">Last chance to save your current floorplan!</p>
+		          </div>
+							
+							<div>
+								<h4>New floorplan name:</h4>
+								<input id="extension-floorplanner-modal-new-floorplan-name-input" type="text" placeholder="Floorplan name"/>
+							</div>
+		          <div class="extension-floorplanner-modal-body m-2">
+		            <div id="extension-floorplanner-recover">
+									Select a plan type:
+									<!--
+		              <p>Would you like to continue working on your last plan?</p>
+		              <button class="extension-floorplanner-btn extension-floorplanner-btn-success extension-floorplanner-shadow" data-bs-dismiss="modal"
+		                onclick="initHistory('recovery');">YES</button>
+		              <hr />
+		              <p>Or do you prefer start a new plan ?<br/></p>
+									-->
+		            </div>
+		            <div class="extension-floorplanner-w-100 extension-floorplanner-d-flex extension-floorplanner-justify-content-center">
+		              <div id="extension-floorplanner-new-file-empty" class="extension-floorplanner-boxMouseOver"><img src="/extensions/floorplanner/images/newPlanEmpty.jpg" class="extension-floorplanner-img-fluid"
+		                    data-bs-dismiss="modal" /></div>
+		              <div id="extension-floorplanner-new-file-square" class="extension-floorplanner-boxMouseOver"><img src="/extensions/floorplanner/images/newPlanSquare.jpg" class="extension-floorplanner-img-fluid"
+		                    data-bs-dismiss="modal" /></div>
+		              <div id="extension-floorplanner-new-file-L" class="extension-floorplanner-boxMouseOver"><img src="/extensions/floorplanner/images/newPlanL.jpg" class="extension-floorplanner-img-fluid"
+		                    data-bs-dismiss="modal" /></div>
+		            </div>
+		          </div>
+		          <!-- <div class="extension-floorplanner-modal-footer">
+		            <button type="button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow" data-dismiss="modal">CLOSE</button>
+		            <button type="button" class="extension-floorplanner-btn extension-floorplanner-btn-primary">YES</button>
+		          </div> -->
+		        </div>
+		      </div>
+		    </div>
+
+
+		    <div class="extension-floorplanner-modal extension-floorplanner-fade extension-floorplanner-hide-emojis-list" id="extension-floorplanner-textToLayer" tabindex="-1" role="dialog" aria-labelledby="textToLayerLabel">
+		      <div class="extension-floorplanner-modal-dialog" role="document">
+		        <div class="extension-floorplanner-modal-content">
+		          <div class="extension-floorplanner-modal-header">
+		            <!--<button type="button" class="extension-floorplanner-btn-close" onclick="cancel_adding_text();" data-bs-dismiss="modal" aria-label="Close"><span
+		                aria-hidden="true">&times;</span></button>-->
+		            <h2 class="extension-floorplanner-modal-title" id="extension-floorplanner-textToLayerLabel">Add text</h2>
+		          </div>
+		          <div class="extension-floorplanner-modal-body">
+							
+		            <div style="display:flex;align-items:center;min-height:9rem">
+									<input type="text" id="extension-floorplanner-labelBox" placeholder="Your text"> <!-- onfocus="this.value='';"  -->
+									
+									<div style="width:3rem;margin:0 1px;">
+							      <select class="extension-floorplanner-form-select" aria-label="Default select example" id="extension-floorplanner-text-suggestions-select">
+							        <option selected value="0">📒</option>
+							        <option value="1">Lounge</option>
+											<option value="51">Living room</option>
+							        <option value="2">Lunchroom</option>
+							        <option value="3">Kitchen</option>
+											<option value="23">Pantry</option>
+											<option value="52">Dining room</option>
+							        <option value="4">Toilet</option>
+											<option value="14">Toilet 2</option>
+							        <option value="5">Bathroom</option>
+											<option value="13">Bathroom 2</option>
+							        <option value="6">Bedroom</option>
+							        <option value="7">Bedroom 2</option>
+							        <option value="8">Bedroom 3</option>
+							        <option value="15">Bedroom 4</option>
+							        <option value="16">Bedroom 5</option>
+							        <option value="9">Locker</option>
+							        <option value="10">Office</option>
+							        <option value="11">Hall</option>
+											<option value="19">Corridor</option>
+							        <option value="12">Loggia</option>
+							        <option value="17">Balcony</option>
+											<option value="21">Balcony 2</option>
+							        <option value="18">Terrace</option>
+											<option value="46">Shed</option>
+							        <option value="20">Garage</option>
+											<option value="21">Garden</option>
+							        <option value="22">Clearance</option>
+											<option value="24">Porch</option>
+											<option value="25">Playroom</option>
+											<option value="26">Mezzanine</option>
+											<option value="27">Cellar</option>
+											<option value="28">Doghouse</option>
+											<option value="29">Treehouse</option>
+											<option value="30">Dock</option>
+											<option value="31">Utility room</option>
+											<option value="32">Heating</option>
+											<option value="33">Pool</option>
+											<option value="34">Serre</option>
+											<option value="35">Waiting room</option>
+											<option value="36">Guest room</option>
+											<option value="48">Foyer</option>
+											<option value="37">Bar</option>
+											<option value="38">Cinema</option>
+											<option value="63">Game room</option>
+											<option value="39">Storage</option>
+											<option value="40">Storage 2</option>
+											<option value="47">Cold storage</option>
+											<option value="41">Veranda</option>
+											<option value="42">Front garden</option>
+											<option value="43">Rear garden</option>
+											<option value="44">Firepit</option>
+											<option value="45">Playground</option>
+											<option value="46">Parking</option>
+											<option value="49">Workshop</option>
+											<option value="50">Kitchenette</option>
+											<option value="53">Reception</option>
+											<option value="54">Family room</option>
+											<option value="55">Sun room</option>
+											<option value="56">Library</option>
+											<option value="57">Closet</option>
+											<option value="58">Laundry room</option>
+											<option value="59">Attic</option>
+											<option value="60">Broom closet</option>
+											<option value="61">Linnen closet</option>
+											<option value="62">Nursery</option>
+											<option value="64">Meeting room</option>
+											<option value="65">Loft</option>
+											<option value="66">Gym</option>
+											<option value="67">Den</option>
+											<option value="68">Staircase</option>
+											<option value="69">Elevator</option>
+											<option value="70">Powder room</option>
+											<option value="71">Dressing room</option>
+											<option value="72">En suite</option>
+											<option value="73">Meditation space</option>
+											<option value="74">Billiards Room</option>
+											<option value="75">Spa</option>
+											<option value="76">Media room</option>
+											<option value="77">Studio</option>
+											<option value="78">Study</option>
+											<option value="79">Nook</option>
+											<option value="80">Cave</option>
+											<option value="81">Pet room</option>
+											<option value="82">Safe room</option>
+											<option value="83">Conservatory</option>
+											<option value="84">Observatory</option>
+											<option value="85">Shrine</option>
+											<option value="86">Crawl space</option>
+											<option value="87">Keeping room</option>
+											<option value="88">Great room</option>
+											<option value="89">Music room</option>
+											<option value="90">Mud room</option>
+											<option value="91">Server room</option>
+											<option value="92">Solarium</option>
+											<option value="93">Sauna</option>
+											<option value="94">Dark room</option>
+											<option value="95">Deck</option>
+											<option value="96">Greenhouse</option>
+											<option value="97">Gazebo</option>
+											<option value="98">Wood shed</option>
+											<option value="99">Dry room</option>
+											<option value="100">Boiler room</option>
+											<option value="101">Classroom</option>
+											<option value="102">Observation room</option>
+											<option value="103">Observation deck</option>
+											<option value="104">Boat house</option>
+											<option value="105">Back room</option>
+											<option value="106">Patio</option>
+											<option value="107">Bike shed</option>
+											<option value="108">Smoking room</option>
+											<option value="109">Garbage room</option>
+											<option value="110">Freezer</option>
+											<option value="111">Breakfast room</option>
+											<option value="112">Guest suite</option>
+											<option value="113">Rooftop</option>
+											<option value="114">Crafts room</option>
+											<option value="115">Panic room</option>
+											<option value="116">Half bath</option>
+											<option value="117">Ritual room</option>
+											<option value="118">Shoe closet</option>
+											<option value="119">Outdoor seating</option>
+											<option value="120">Orchard</option>
+											<option value="121">Driveway</option>
+											<option value="122">Secret room</option>
+											<option value="123">Vegetable garden</option>
+											<option value="124">Outhouse</option>
+											<option value="125">Composting</option>
+											<option value="126">Kennel</option>
+											<option value="127">Stable</option>
+											<option value="128">Kennel</option>
+											<option value="129">Minarette</option>
+											<option value="130">Cupola</option>
+											<option value="131">Enfilade</option>
+											<option value="132">Fireplace</option>
+											<option value="133">Tower</option>
+											<option value="134">Dormer</option>
+											<option value="135">Nook</option>
+											<option value="136">Guard house</option>
+							
+							      </select>
+									</div>
+									
+									<button id="extension-floorplanner-text-toggle-emojis-button">😀</button>
+								</div>
+								<div id="extension-floorplanner-text-emojis-list">
+									Loading emojis...
+								</div>
+							
+								<div id="extension-floorplanner-text-colors-container">
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientRed"
+			              style="color:#f55847;background:linear-gradient(30deg, #f55847, #f00);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientYellow"
+			              style="color:#e4c06e;background:linear-gradient(30deg,#e4c06e, #ffb000);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientGreen"
+			              style="color:#88cc6c;background:linear-gradient(30deg,#88cc6c, #60c437);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientSky"
+			              style="color:#77e1f4;background:linear-gradient(30deg,#77e1f4, #00d9ff);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientBlue"
+			              style="color:#4f72a6;background:linear-gradient(30deg,#4f72a6, #284d7e);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientGrey"
+			              style="color:#666666;background:linear-gradient(30deg,#666666, #aaaaaa);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientWhite"
+			              style="color:#fafafa;background:linear-gradient(30deg,#fafafa, #eaeaea);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientOrange"
+			              style="color:#f9ad67;background:linear-gradient(30deg, #f9ad67, #f97f00);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientPurple"
+			              style="color:#a784d9;background:linear-gradient(30deg,#a784d9, #8951da);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientPink"
+			              style="color:#df67bd;background:linear-gradient(30deg,#df67bd, #e22aae);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientBlack"
+			              style="color:#3c3b3b;background:linear-gradient(30deg,#3c3b3b, #000000);"></div>
+			            <div class="extension-floorplanner-color extension-floorplanner-textEditorColor" data-type="gradientNeutral"
+			              style="color:#e2c695;background:linear-gradient(30deg,#e2c695, #c69d56);"></div>
+								</div>
+								
+		            <div id="extension-floorplanner-text-size-container">
+									<p style="display:inline-block;margin-right:1rem;font-weight:bold">Size </p>
+		            	<input type="range" list="tickmarks" id="extension-floorplanner-text-size-slider" step="0.1" min="10" max="60" value="15" class="extension-floorplanner-range" style="width:200px" />
+								</div>
+							
+		          </div>
+						
+		          <div class="extension-floorplanner-modal-footer" style="text-align:right">
+		            <button id="extension-floorplanner-cancel-text" type="button" class="extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow" data-bs-dismiss="modal">Cancel</button>&nbsp;&nbsp;
+		            <button id="extension-floorplanner-save-text" type="button" class="extension-floorplanner-btn extension-floorplanner-btn-primary">Apply</button>
+		          </div>
+						
+		        </div>
+		      </div>
+		    </div>
+			</div>
+
+	    
+			<div id="extension-floorplanner-current-filename-container" class="extension-floorplanner-hidden"><span class="extension-floorplanner-text-bg"><span class="extension-floorplanner-unicode-icon-medium" style="position:relative;top:-.1rem">⌂</span> <span>Floorplanner</span> <span id="extension-floorplanner-current-filename"></span></span></div>
+
+	    <div id="extension-floorplanner-boxinfo"></div>
+
+	    <div id="extension-floorplanner-moveBox">
+	      
+				<p id="extension-floorplanner-title"></p>
+				
+	      <div class="extension-floorplanner-pull-right">
+	        <p style="margin:0">
+						<button class="extension-floorplanner-btn extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-zoom extension-floorplanner-zoom-in-out-button" data-zoom="zoomout">-</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-xs extension-floorplanner-btn-info extension-floorplanner-zoom" data-zoom="zoomtop">↑</button>
+						<button class="extension-floorplanner-btn extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-zoom extension-floorplanner-zoom-in-out-button" data-zoom="zoomin">+</button>
+					</p>
+	        <p style="margin:0">
+	          <button class="extension-floorplanner-btn extension-floorplanner-btn-xs extension-floorplanner-btn-info extension-floorplanner-zoom" data-zoom="zoomleft">←</button>
+	          <button class="extension-floorplanner-btn extension-floorplanner-btn-xs extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-zoom" data-zoom="zoomreset">⊙</button>
+	          <button class="extension-floorplanner-btn extension-floorplanner-btn-xs extension-floorplanner-btn-info extension-floorplanner-zoom" data-zoom="zoomright">→</button>
+	        </p>
+	        <p style="margin:0">
+						<button class="extension-floorplanner-btn extension-floorplanner-btn-xs extension-floorplanner-btn-info extension-floorplanner-zoom" data-zoom="zoombottom">↓</button>
+					</p>
+	      </div>
+	    </div>
+
+			<!--
+	    <div id="extension-floorplanner-zoomBox">
+	      <div class="extension-floorplanner-pull-right" style="margin-right:10px">
+					<p>
+	        	<button class="extension-floorplanner-btn extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-zoom" data-zoom="zoomin">+</button>
+	        	<button class="extension-floorplanner-btn extension-floorplanner-btn extension-floorplanner-btn-light extension-floorplanner-shadow extension-floorplanner-zoom" data-zoom="zoomout">-</button>
+					</p>
+	      </div>
+	    </div>
+			//-->
+	    <div id="extension-floorplanner-zoomBox2">
+				<div id="extension-floorplanner-scaleVal" class="extension-floorplanner-pull-right">
+					1m
+				</div>
+			</div>
+			
+	    <div id="extension-floorplanner-start-floorplanner-button-container">
+				<button id="extension-floorplanner-start-floorplanner-button"><!-- 🏠 EDIT // --></button>
+			</div>
+			
+    </div>
+		
+  </div>
+			
+</div>

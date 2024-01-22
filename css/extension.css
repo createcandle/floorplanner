@@ -1,0 +1,2237 @@
+#extension-floorplanner-view{
+	padding:0;
+}
+
+#extension-floorplanner-menu-item {
+  	background-image: url('../images/menu-icon.svg');
+}
+
+
+#extension-floorplanner-border-tab-menu{
+	background:black;
+}
+
+#extension-floorplanner-border-tab-menu,
+#extension-floorplanner-border-root #extension-floorplanner-border-menu{
+	padding-left:8.6rem;
+}
+
+
+
+/*  full screen  */
+
+#extension-floorplanner-border-menu,
+#extension-floorplanner-border-titlebar{
+	transition: max-height 3s cubic-bezier(0, 1, 0, 1);
+	max-height:200px;
+	overflow: hidden;
+}
+.extension-floorplanner-fullscreen #extension-floorplanner-border-menu,
+.extension-floorplanner-fullscreen #extension-floorplanner-border-titlebar{
+	max-height: 0;
+}
+
+.extension-floorplanner-fullscreen .extension-floorplanner-border-view{
+	pointer-events:none;
+}
+
+
+
+/*  first-run hint  */
+
+
+#extension-floorplanner-first-run-hint{
+	position:fixed;
+	display:none;
+	align-items:center;
+	justify-content:center;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	height:100vh;
+	width:100vw;
+	background-color:rgba(0,0,0,.8);
+	z-index:1000;
+}
+
+
+#extension-floorplanner-first-run-hint > div{
+	background-color:#5d9bc7;
+	color:white;
+	font-size:1.6rem;
+	border-radius:1rem;
+	padding:2rem 4rem;
+	margin:2rem;
+	max-width:40rem;
+}
+
+
+
+
+#extension-floorplanner-content-container{
+    z-index: -1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#floorplan{
+	pointer-events:none;
+	background-image:none!important;
+}
+
+#floorplan > .floorplan-thing{
+	box-shadow:none;
+}
+#floorplan > .floorplan-thing > *{
+	pointer-events:auto;
+	cursor:pointer;
+}
+#floorplan > .floorplan-thing > *:hover{
+	filter: contrast(130%);
+}
+#floorplan > .floorplan-thing > *:hover + .floorplan-thing-title{
+	display:block;
+}
+
+
+body #floorplan-edit-button{
+	background-image: url(/extensions/floorplanner/images/position_edit.svg);
+    background-size: 60%;
+    background-position: center center;
+}
+
+body #floorplan-done-button{
+	background-color:rgba(128,128,128,.5);
+}
+
+
+#floorplan.extension-floorplanner-scale1 > .floorplan-thing > *{
+	transform:scale(0.5)!important;	
+	font-size: 2.7rem;
+}
+#floorplan.extension-floorplanner-scale2 > .floorplan-thing > *{
+	transform:scale(0.62)!important;
+	font-size: 2.7rem;
+}
+#floorplan.extension-floorplanner-scale3 > .floorplan-thing > *{
+	transform:scale(0.75)!important;
+	font-size: 2.5rem;
+}
+#floorplan.extension-floorplanner-scale4 > .floorplan-thing > *{
+	transform:scale(0.88)!important;
+	font-size: 2.2rem;
+}
+
+#floorplan.extension-floorplanner-scale6 > .floorplan-thing > *{
+	transform:scale(1.15)!important;
+}
+
+#floorplan > .floorplan-thing > *:not(.floorplan-thing-title){
+	border-radius:50%;
+	box-shadow: 1px 1px 2px 2px rgba(0,0,0,.3);
+}
+
+
+
+.floorplan-thing .floorplan-thing-title{
+	position:relative;
+	pointer-events:none;
+	overflow:visible;
+}
+#floorplan.extension-floorplanner-scale1 .floorplan-thing-title{
+	top:-4rem;
+}
+#floorplan.extension-floorplanner-scale2 .floorplan-thing-title{
+	top:-3rem;
+}
+#floorplan.extension-floorplanner-scale3 .floorplan-thing-title{
+	top:-2rem;
+}
+#floorplan.extension-floorplanner-scale4 .floorplan-thing-title{
+	top:-0.5rem;
+}
+#floorplan.extension-floorplanner-scale6 .floorplan-thing-title{
+	top:1rem;
+}
+
+
+.extension-floorplanner-edit-mode #floorplan{
+	opacity:.1;
+	pointer-events:none;
+}
+
+.extension-floorplanner-edit-mode #floorplan > .floorplan-thing > *{
+	pointer-events:none;
+}
+
+#floorplan-upload-form{
+	display:none;
+}
+
+
+#extension-floorplanner-content *:fullscreen, *:-webkit-full-screen, *:-moz-full-screen {
+    background-color: rgba(255,255,255,0);
+}
+
+#extension-floorplanner-content input::placeholder{
+	opacity:.5;
+}
+
+/*
+#extension-floorplanner-lin{
+	margin:0;
+	padding:0;
+	width:100vw;
+	height:100vh;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0
+}
+*/
+#extension-floorplanner-lin{
+	margin:0 auto;
+	padding:0;
+	width:100vh;
+	height:100vh;
+	display:block;
+	overflow:visible;
+}
+
+
+#extension-floorplanner-content{
+	color:#333;
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: transparent;
+	font-family: sans-serif;
+}
+
+#extension-floorplanner-content #h2 {
+  font-size:1.4em;
+}
+
+#extension-floorplanner-text-colors-container{
+	display:flex;
+	justify-content:flex-end;
+	margin-bottom:1rem;
+}
+#extension-floorplanner-content.extension-floorplanner-touch #extension-floorplanner-text-colors-container{
+	justify-content:flex-end;
+}
+
+#extension-floorplanner-content .extension-floorplanner-color {
+  width:30px;
+  height:30px;
+  border:0.5px solid transparent;
+  border-radius:3px;
+  transition:  0.15s;
+  margin-left:.2rem;
+}
+#extension-floorplanner-content .extension-floorplanner-color:hover {
+  border: 0.5px solid #aaa;
+  transform: scale(1.3);
+}
+#extension-floorplanner-content.extension-floorplanner-touch .extension-floorplanner-color{
+	flex-grow:1;
+	margin-left:.4rem;
+	height:4rem;
+}
+
+#extension-floorplanner-text-size-container{
+	display:flex; 
+	align-items:center;
+	justify-content:flex-end;
+	margin-bottom:2rem;
+}
+#extension-floorplanner-content.extension-floorplanner-touch #extension-floorplanner-text-size-container{
+	margin: 2rem 0;
+}
+
+
+#extension-floorplanner-text-size-slider{
+	width:50%;
+}
+#extension-floorplanner-content.extension-floorplanner-touch #extension-floorplanner-text-size-slider{
+	width:90%;
+}
+
+#extension-floorplanner-content .extension-floorplanner-boxMouseOver {transition:0.2s;border:3px solid #fff;}
+#extension-floorplanner-content .extension-floorplanner-boxMouseOver:hover {
+  border:3px solid #08d;
+  border-radius:3px;
+  cursor: pointer;
+}
+
+#extension-floorplanner-content .extension-floorplanner-leftBox {
+  background:#fff;
+  box-shadow:2px 0px 3px rgba(128,128,128,.3);
+  top:0px;
+  width:100px;
+  height:100vh;
+  max-height:100vh;
+  overflow:auto;
+  /*overflow-y:auto;*/
+  padding:.7rem;
+  position:absolute;
+  z-index:6;
+  display:none;
+  /*font-size:0.9em;*/
+  box-sizing:border-box;
+}
+
+#extension-floorplanner-content .extension-floorplanner-leftBox:not(#extension-floorplanner-panel){
+	padding-top:9rem;
+}
+
+
+#extension-floorplanner-content #extension-floorplanner-panel {
+  display: block;
+  position:fixed;
+  /*left:-100px;*/
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in;
+  transition-delay: 250ms;
+  box-sizing:border-box;
+  padding:0;
+}
+
+#extension-floorplanner-content #extension-floorplanner-panel-scroller{
+	height:calc(100vh - 9rem);
+	margin-top:9rem;
+	overflow-y:auto;
+	overflow-x:visible;
+	padding: .9rem;
+	box-sizing:border-box;
+}
+
+#extension-floorplanner-content #extension-floorplanner-areaValue {
+  position:absolute;
+  /*bottom: 6rem;
+  right: 1.6rem;*/
+  top: 1rem;
+  left: 115px;
+  padding:5px;
+  color:rgba(0,0,0,.2);
+  font-size:1.5em;
+  pointer-events:none;
+}
+
+#extension-floorplanner-content header{
+	display:none;
+	font-size:11px;
+}
+
+
+
+#extension-floorplanner-content input[type=range] {
+  -webkit-appearance: none;
+  margin: 1rem 0 .9rem 0;
+  width: 100%;
+}
+#extension-floorplanner-content input[type=range]:focus {
+  outline: none;
+}
+#extension-floorplanner-content input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+#extension-floorplanner-content input[type=range]::-webkit-slider-thumb {
+  border: 1px solid #000000;
+  height: 30px;
+  width: 24px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -14px;
+}
+#extension-floorplanner-content input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+#extension-floorplanner-content input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+#extension-floorplanner-content input[type=range]::-moz-range-thumb {
+  border: 1px solid #000000;
+  height: 20px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+#extension-floorplanner-content input[type=range]::-moz-focus-outer {
+    border: 0;
+}
+#extension-floorplanner-content input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+#extension-floorplanner-content input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+#extension-floorplanner-content input[type=range]::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+#extension-floorplanner-content input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+#extension-floorplanner-content input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+#extension-floorplanner-content input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd;
+}
+
+#extension-floorplanner-content .extension-floorplanner-modalBox {
+  position:absolute;
+  display:none;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index:1000
+}
+#extension-floorplanner-content .extension-floorplanner-modalBox::after {
+  content: "";
+  background-image: linear-gradient(#fff,#777);
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  width:100vw;
+  height:100vh;
+  position: absolute;
+  z-index: -1;
+}
+#extension-floorplanner-content .extension-floorplanner-modalBoxContent {
+  position: relative;
+  margin: auto;
+  padding:20px;
+  width:300px;
+  border-radius:5px;
+  background:#fff;
+  font-size:1.5em;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: extension-floorplanner-animatetop;
+  animation-duration: 0.3s
+}
+
+/* Add Animation */
+@keyframes extension-floorplanner-animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+@keyframes extension-floorplanner-animatedown {
+    from {top: 0px; opacity: 1}
+    to {top: -300px; opacity: 0}
+}
+
+#extension-floorplanner-content .extension-floorplanner-area {
+  display:block;
+  color:'#34e0be';
+  fontSize:'12.5px';
+  fontWeight:'normal';
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio div {
+clear: both;
+overflow: hidden;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio label {
+width: 100%;
+border-radius: 3px;
+border: 1px solid #D1D3D4;
+font-weight: normal;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="radio"]:empty,
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:empty {
+display: none;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="radio"]:empty ~ label,
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:empty ~ label {
+position: relative;
+/*line-height: 2rem;
+text-indent: 3.25em;*/
+border-color:transparent;
+cursor: pointer;
+-webkit-user-select: none;
+ -moz-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+}
+
+/*
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="radio"]:empty ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:empty ~ label:before {
+position: absolute;
+display: block;
+top: 0;
+bottom: 0;
+left: 0;
+content: '';
+width: 2.5em;
+background: #D1D3D4;
+border-radius: 3px 0 0 3px;
+}
+*/
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="radio"]:hover:not(:checked) ~ label,
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
+color: #888;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
+content: '\2714';
+text-indent: .9em;
+color: #C2C2C2;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="radio"]:checked ~ label,
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:checked ~ label {
+color: #777;
+border-color:transparent;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="radio"]:checked ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:checked ~ label:before {
+content: '\2714';
+text-indent: .9em;
+color: #333;
+background-color: #ccc;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="radio"]:focus ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:focus ~ label:before {
+box-shadow: 0 0 0 3px #999;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio-default input[type="radio"]:checked ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio-default input[type="checkbox"]:checked ~ label:before {
+color: #333;
+background-color: #ccc;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio-primary input[type="radio"]:checked ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio-primary input[type="checkbox"]:checked ~ label:before {
+color: #fff;
+background-color: #337ab7;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio-success input[type="radio"]:checked ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio-success input[type="checkbox"]:checked ~ label:before {
+color: #fff;
+background-color: #5cb85c;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio-danger input[type="radio"]:checked ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio-danger input[type="checkbox"]:checked ~ label:before {
+color: #fff;
+background-color: #d9534f;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio-warning input[type="radio"]:checked ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio-warning input[type="checkbox"]:checked ~ label:before {
+color: #fff;
+background-color: #f0ad4e;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio-info input[type="radio"]:checked ~ label:before,
+#extension-floorplanner-content .extension-floorplanner-funkyradio-info input[type="checkbox"]:checked ~ label:before {
+color: #fff;
+background-color: #5bc0de;
+}
+#extension-floorplanner-content .extension-floorplanner-btn {margin-bottom:6px;transition:all 0.3s}
+#extension-floorplanner-content .extension-floorplanner-fully {width:100%}
+#extension-floorplanner-content .extension-floorplanner-halfy {
+	width:47%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#extension-floorplanner-content #extension-floorplanner-tool-root button.extension-floorplanner-btn-default:hover,
+#extension-floorplanner-content .extension-floorplanner-btn:hover {background:#08d;}
+#extension-floorplanner-content .extension-floorplanner-ovv {transition:all 0.1s;}
+
+#extension-floorplanner-content .extension-floorplanner-circle_css {fill:#5cba79;fill-opacity:0.9;transition:all 0.4s}
+#extension-floorplanner-content .extension-floorplanner-circle_css_2 {stroke:#5cba79;stroke-width:0;fill:#5cba79;fill-opacity:0.9;animation: extension-floorplanner-myAnim 0.6s linear infinite;}
+@keyframes extension-floorplanner-myAnim{
+  0% {  stroke-width:0}
+  50% {  stroke-width:8}
+  100% {  stroke-width:0}
+}
+@keyframes extension-floorplanner-myAnim2{
+  0% {  stroke-width:4}
+  50% {  stroke-width:7}
+  100% {  stroke-width:4}
+}
+#extension-floorplanner-content .extension-floorplanner-circle_css_3 {stroke:#5cba79;stroke-width:5;fill:#d7f00b;fill-opacity:1;transition:all 0.4s}
+#extension-floorplanner-content .extension-floorplanner-circleGum  {fill-opacity:0.2;fill:#e1f410;stroke-width:4;stroke:#5cba79;transition:all 0.5s; animation: extension-floorplanner-myAnim2 0.6s linear infinite;}
+#extension-floorplanner-content .extension-floorplanner-line_css {stroke:transparent;stroke-width:15;transition:all 0.2s}
+/*.line_css:hover {stroke:#08d;stroke-width:15;stroke-opacity:0.5;cursor:pointer;}*/
+#extension-floorplanner-content .extension-floorplanner-trash_css {stroke:transparent;stroke-width:5;transition:all 0.2s}
+#extension-floorplanner-content .extension-floorplanner-trash_css:hover {stroke:#f00;stroke-width:5;stroke-opacity:0.5;cursor:pointer;}
+
+#extension-floorplanner-content .extension-floorplanner-tool_color {float:left;width:30px;height:30px;margin:2.2px}
+
+#extension-floorplanner-content #extension-floorplanner-ex1Slider .slider-selection {
+  background: #bec7cd;
+}
+
+
+
+@media print {
+    #extension-floorplanner-content .extension-floorplanner-leftBox {
+        display: none;
+    }
+    #extension-floorplanner-content header {display:block}
+	
+	#extension-floorplanner-content #extension-floorplanner-lin{
+		transform: scale(0.95);
+	}
+	#extension-floorplanner-content .extension-floorplanner-leftBox,
+	#extension-floorplanner-content #extension-floorplanner-floorplans-list,
+	#extension-floorplanner-content #extension-floorplanner-areaValue,
+	#extension-floorplanner-content #extension-floorplanner-modals-container,
+	#extension-floorplanner-content #extension-floorplanner-start-floorplanner-button-container,
+	#extension-floorplanner-content #extension-floorplanner-zoomBox2,
+	#extension-floorplanner-content #extension-floorplanner-panel,
+	#extension-floorplanner-content #extension-floorplanner-moveBox,
+	#extension-floorplanner-content #extension-floorplanner-panel-level2,
+    #extension-floorplanner-content #extension-floorplanner-boxScale,
+    #extension-floorplanner-content #extension-floorplanner-boxbindm
+    #extension-floorplanner-content #extension-floorplanner-boxScale,
+    #extension-floorplanner-content #extension-floorplanner-zoomBox,
+    #extension-floorplanner-content #extension-floorplanner-boxinfo {display:none!important}
+    #extension-floorplanner-content #extension-floorplanner-lin {height:19cm;width:27cm}
+    #extension-floorplanner-content #extension-floorplanner-boxgrid {height:19cm;width:27cm}
+    #extension-floorplanner-content #extension-floorplanner-areaValue {left:0px;top:1rem}
+    #extension-floorplanner-content *,
+    #extension-floorplanner-content *:before,
+    #extension-floorplanner-content *:after,
+    #extension-floorplanner-content *:first-letter,
+    #extension-floorplanner-content p:first-line,
+    #extension-floorplanner-content div:first-line,
+    #extension-floorplanner-content blockquote:first-line,
+    #extension-floorplanner-content li:first-line {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+#floorplan-view.selected.edit #extension-floorplanner-start-floorplanner-button{
+	display:none;
+}
+
+/*   THINGS LIST   */
+
+#extension-floorplanner-things-container{
+	display:none;
+	position:fixed;
+	top:9rem;
+	left:0;
+	bottom:0;
+	background-color:rgba(255,255,255,.1);
+	border-radius:.5rem;
+	padding:1rem;
+    box-sizing: border-box;
+}
+#floorplan-view.selected.edit #extension-floorplanner-things-container{
+	display:flex;
+}
+
+#extension-floorplanner-things-container > div{
+	
+}
+
+
+#extension-floorplanner-things-container{
+	width: calc((100vw - 100vh) / 2);
+	max-width:200px;
+}
+
+
+
+#extension-floorplanner-things-list-wrapper{
+	height:100%;
+	overflow:auto;
+	padding-left:.2rem;
+}
+
+#extension-floorplanner-things-list{
+	margin-left:0;
+	padding-left:0;
+	list-style-type:none;
+}
+
+#extension-floorplanner-things-list li{
+	margin:.5rem 0;
+	padding:.5rem 0;
+	display:flex;
+	box-sizing:border-box;
+}
+
+#extension-floorplanner-things-list input[type=checkbox]{
+    transform: scale(2);
+    padding: 10px;
+}
+#extension-floorplanner-things-list label{
+    margin-left: 1rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    opacity: .8;
+    width: 100%;
+}
+
+/*  modification / additions  */
+
+
+#extension-floorplanner-content #extension-floorplanner-tool-root button{
+	border-radius:.5rem;
+	border:none;
+	color:inherit;
+	cursor:pointer;
+}
+#extension-floorplanner-content #extension-floorplanner-tool-root .extension-floorplanner-leftBox button{
+	padding:.5rem .6rem;
+	background-color:#bbb;
+}
+
+#extension-floorplanner-content #extension-floorplanner-tool-root .extension-floorplanner-leftBox button.extension-floorplanner-btn-success,
+#extension-floorplanner-content #extension-floorplanner-tool-root .extension-floorplanner-leftBox button:hover{
+	background:#08d;
+}
+
+#extension-floorplanner-content .extension-floorplanner-modal-footer button{
+	font-size:1.4rem;
+	padding:.5rem .8rem;
+}
+
+
+#extension-floorplanner-first-run-hint{
+	display:none;
+}
+
+
+
+.extension-floorplanner-list-unstyled{
+	padding:0;
+	list-style:none;
+}
+
+
+
+
+/*  Bootstrap copies  */
+
+
+
+
+.extension-floorplanner-fade:not(.show) {
+    /* opacity: 0; */
+}
+.extension-floorplanner-fade {
+    transition: opacity .15s linear;
+}
+
+
+
+
+#extension-floorplanner-modals-container{
+	position: fixed;
+	top:0;
+	left:0;
+	height:100vh;
+	width:100vw;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	pointer-events:none;
+	z-index: 1055;
+}
+.extension-floorplanner-modal{
+    display: none;
+    width: auto;
+	max-width:75vw;
+    height: auto;
+	max-height:90vh;
+    overflow: auto;
+    outline: 0;
+	background-color:white;
+	border-radius:1rem;
+	padding:2rem;
+	box-shadow: 2px 2px 5px #ccc;
+	pointer-events:auto;
+	box-sizing: border-box;
+}
+
+
+
+.extension-floorplanner-d-flex{
+	display:flex;
+}
+.extension-floorplanner-justify-content-center{
+	justify-content:center;
+}
+
+#extension-floorplanner-tool-root{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100vw;
+	height:100vh;
+	background-color:#beedfd;
+}
+
+.extension-floorplanner-btn img{
+	max-width:100%;
+}
+
+/*
+.extension-floorplanner-btn-default{
+	background-color:green;
+}
+*/
+
+
+#extension-floorplanner-roomTools{
+	max-height:100vh;
+	overflow-y:auto;
+	box-sizing:border-box;
+}
+
+.extension-floorplanner-flex-between{
+	display:flex;
+	width:100%;
+	align-items:center;
+	justify-content: space-between;
+}
+#extension-floorplanner-tool-root .extension-floorplanner-flex-between > *{
+	width:47%;
+	box-sizing:border-box;
+}
+/*
+#extension-floorplanner-tool-root .extension-floorplanner-flex-between.extension-floorplanner-menu-area{
+	align-items:baseline;
+}
+*/
+
+#extension-floorplanner-tool-root .extension-floorplanner-flex-between.extension-floorplanner-menu-area > *{
+	width:auto;
+}
+#extension-floorplanner-tool-root .extension-floorplanner-flex-between.extension-floorplanner-menu-area p{
+	text-align:left;
+}
+
+
+.extension-floorplanner-flex-wrap{
+	flex-wrap:wrap;
+}
+
+#extension-floorplanner-undo,
+#extension-floorplanner-redo{
+	line-height: 2rem;
+	font-size: 3rem;
+}
+
+
+
+#extension-floorplanner-undo > span{
+	display:inline-block;
+	transform: rotate(-45deg);
+}
+#extension-floorplanner-redo > span{
+	display:inline-block;
+	transform: rotate(45deg);
+}
+
+#extension-floorplanner-content #extension-floorplanner-panel #extension-floorplanner-select_mode{
+    /*padding: 1.5rem 0 2rem 0;*/
+    display: flex;
+    justify-content: center;
+}
+#extension-floorplanner-content #extension-floorplanner-panel #extension-floorplanner-select_mode:not(.extension-floorplanner-btn-success){
+	fill:blue;
+}
+
+
+#extension-floorplanner-select_mode > span{
+	display:inline-block;
+	transform: rotate(58deg);
+	font-size:2rem;
+	line-height:0;
+}
+
+.extension-floorplanner-unicode-icon-large{
+	font-size:5rem;
+}
+.extension-floorplanner-unicode-icon-medium{
+	font-size:2.5rem;
+}
+
+
+.extension-floorplanner-door,
+.extension-floorplanner-window{
+	padding:1rem;
+}
+.extension-floorplanner-sub-icon{
+	width: 4rem;
+	margin: 0rem auto .5rem 0;
+}
+
+
+#extension-floorplanner-tool-root:not(.extension-floorplanner-has-room) .extension-floorplanner-show-if-room{
+	display:none;
+}
+
+
+.extension-floorplanner-boxMouseOver > img{
+	min-width:3rem;
+	min-height:3rem;
+	margin:.5rem;
+	border-radius:.5rem;
+}
+
+
+#extension-floorplanner-line_mode{
+	margin-bottom:0;
+}
+
+
+/*  hidden for Candle  */
+body:not(.developer) .extension-floorplanner-show-if-developer{
+	display:none;
+}
+
+
+
+.extension-floorplanner-zoom{
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	font-weight:bold;
+	/*color:white!important;*/
+}
+
+#extension-floorplanner-content #extension-floorplanner-objTools{
+	width:150px;
+}
+
+
+.extension-floorplanner-disabled{
+	opacity:.2;
+}
+
+
+#extension-floorplanner-multi-container{
+	height:2rem;
+	margin-bottom:.5rem;
+	background-color:#ddd;
+	/*border-bottom-left-radius:.5rem;*/
+	border-radius:.5rem;
+	overflow:hidden;
+    border-left: 0.5rem solid #ddd;
+    box-sizing: border-box;
+}
+#extension-floorplanner-multi-container > div{
+	width:10%;
+	flex-grow:1;
+}
+
+
+#extension-floorplanner-content #extension-floorplanner-multi-container #extension-floorplanner-multi-container-zigzag{
+	max-width:47%;
+}
+
+#extension-floorplanner-multi-container span{
+	display:inline-block;
+	transform:rotate(90deg);
+	font-size:3rem;
+    width: 0.8rem;
+    height: 5rem;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"] ~ label:before{
+    content: '✗';
+    text-indent: 0;
+    color: #999;
+    background-color: #ccc;
+    height: 1.6rem;
+    width: 1.6rem;
+    /*border:.2rem 0 .2rem .4rem solid #red;*/
+	margin:.2rem 0 .2rem .4rem;
+    border-radius: 0.4rem;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-indent: 0em;
+	box-sizing:border-box;
+	
+}
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:checked ~ label:before{
+	background-color: #5cb85c;
+	color: #fff;
+	text-indent: 0em;
+}
+
+#extension-floorplanner-content .extension-floorplanner-funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before{
+	background-color: #5cb85c;
+	text-indent: 0em;
+}
+
+#extension-floorplanner-layer_list{
+	display:none;
+	position:fixed;
+	left:100px;
+	bottom:0px;
+	width:auto;
+	z-index:-1;
+}
+
+
+#extension-floorplanner-layer_list-checkboxes{
+	width:6rem;
+}
+
+#extension-floorplanner-layer_list > div{
+	box-shadow:2px 2px 3px #ccc;
+	background:#fff;
+	border-radius: 0 5px 5px 0; 
+	padding:.5rem .5rem .5rem 0;
+}
+
+#extension-floorplanner-layer_list > div .extension-floorplanner-funkyradio-info{
+	padding:.5rem;
+}
+
+#extension-floorplanner-object_list{
+	display:none;
+	/*
+	box-shadow:2px 2px 3px #ccc;
+	display:none;
+	background:#fcf;
+	border-radius: 0 5px 5px 0; 
+	padding:10px;
+	position:fixed;
+	left:100px;
+	top:0px;
+	width:auto;
+	z-index:-1;
+	max-height:calc(100vh - 20rem);
+	*/
+	margin-bottom:2rem;
+	width:2rem;
+}
+
+#extension-floorplanner-content #extension-floorplanner-object_list:empty{
+	display:none!important;
+}
+
+
+#extension-floorplanner-layer_list .extension-floorplanner-funkyradio{
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	outline: none;
+	width:6.5rem;
+}
+#extension-floorplanner-layer_list .extension-floorplanner-funkyradio:after{
+	
+}
+
+#extension-floorplanner-layer_list .extension-floorplanner-funkyradio:hover{
+	background-color:rgba(0,0,0,.1);
+}
+
+#extension-floorplanner-content #extension-floorplanner-layer_list .extension-floorplanner-funkyradio input[type="checkbox"] ~ label{
+	border:none;
+}
+
+/*
+#extension-floorplanner-layer_list .extension-floorplanner-unicode-icon-medium{
+	margin-left:.5rem;
+}
+*/
+
+#extension-floorplanner-object_list{
+	
+	/*
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr;
+	grid-auto-flow: column;
+	*/
+	/*
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 1px;
+	grid-template-columns: repeat(3, 1fr); 
+	/*grid-template-rows: repeat(5, auto);*/
+	/*grid-template-rows: auto;
+	
+	column-count: 3;*/
+	
+}
+
+
+.extension-floorplanner-object-item-name{
+	font-size: 0;
+	display:inline-block;
+}
+.extension-floorplanner-object-item-name:first-letter {
+	font-size: 1.5rem;
+}
+
+
+
+#extension-floorplanner-content .extension-floorplanner-leftBox:not(#extension-floorplanner-panel) {
+	box-shadow: 0px 0 100px 100px rgba(0,0,0,0.4);
+	z-index:2;
+}
+
+.extension-floorplanner-leftBox button{
+	width:100%;
+}
+
+#extension-floorplanner-content .extension-floorplanner-roomColor {
+	transition:all .1s ease-in-out;
+	width:47%;
+	height:4rem;
+	border-radius:1rem;
+	border:1px solid transparent;
+	box-sizing:border-box;
+	margin-bottom:.5rem;
+}
+#extension-floorplanner-content .extension-floorplanner-roomColor:hover {
+	transform: scale(1.1);
+	cursor:pointer;
+	border:1px solid #333;
+}
+
+/*
+#extension-floorplanner-content #extension-floorplanner-full_mode,
+#extension-floorplanner-content #extension-floorplanner-nofull_mode{
+	width: 58%;
+}
+#extension-floorplanner-content #extension-floorplanner-full_mode span,
+#extension-floorplanner-content #extension-floorplanner-nofull_mode span{
+	font-size:1.1rem;
+}
+*/
+
+/*
+#extension-floorplanner-content #extension-floorplanner-svg-download-button{
+	width:40%;
+}
+*/
+
+#extension-floorplanner-content .extension-floorplanner-btn-success{
+	/*background-color:blue;*/
+	background-color:#08d;
+	color:white;
+}
+
+#extension-floorplanner-applySurface,
+#extension-floorplanner-content #extension-floorplanner-tool-root button.extension-floorplanner-btn-done{
+	width:100%;
+	min-height:4rem;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	background-color:green;
+	color:white;
+	font-weight:bold;
+}
+
+#extension-floorplanner-content #extension-floorplanner-tool-root button.extension-floorplanner-btn-danger{
+	background-color:#fc4e4e;
+}
+
+.extension-floorplanner-hidden{
+	display:none!important;
+}
+
+
+
+.extension-floorplanner-scale-linked-true{display:none;}
+.extension-floorplanner-scale-linked-false{display:inline-block;}
+.extension-floorplanner-scale-linked .extension-floorplanner-scale-linked-true{display:inline-block;}
+.extension-floorplanner-scale-linked .extension-floorplanner-scale-linked-false{display:none;}
+
+.extension-floorplanner-scale-linked #extension-floorplanner-scale-link-toggle-button-container + div{
+	opacity:.2;
+}
+.extension-floorplanner-scale-linked #extension-floorplanner-scale-link-toggle-button-container + div *{
+	pointer-events:none;
+}
+
+
+#extension-floorplanner-content .extension-floorplanner-vertical-flex-between{
+	display:flex;
+	flex-direction:column;
+	justify-content:space-between;
+	height:100%;
+}
+
+#extension-floorplanner-content #extension-floorplanner-panel{
+	height:100vh;
+	z-index:1;
+}
+
+#extension-floorplanner-svg-container-bg-image,
+#extension-floorplanner-svg-container{
+	position:relative;
+	/*z-index:-1;*/
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+	background-size:contain;
+	background-repeat: no-repeat;
+	margin:0 auto;
+}
+
+#extension-floorplanner-svg-container-bg-image{
+	position:fixed;
+	top:0;
+	left:0;
+	opacity:0;
+}
+
+
+#extension-floorplanner-svg-container-bg-image > svg{
+    width: 100vh;
+    height: 100vh;
+	margin:0 auto;
+	display:block;
+	overflow:visible;
+	/*border: 1px dashed rgba(0,0,0,.5);
+	box-shadow: 0 0 10px rgba(0,0,0,.15);*/
+	box-sizing:border-box;
+}
+#extension-floorplanner-lin{
+	border: 1px dashed rgba(0,0,0,.2);
+	box-shadow: 0 0 10px rgba(0,0,0,.05);
+	box-sizing:border-box;
+}
+
+#floorplan-view.edit #extension-floorplanner-svg-container-bg-image > svg{
+	border: 1px dashed rgba(0,0,0,.5);
+	box-shadow: 0 0 10px rgba(0,0,0,.15);
+}
+
+
+.extension-floorplanner-slow-fade-out{
+	animation: extension-floorplanner-slow-fade-out 5s linear 1;
+	animation-fill-mode: forwards;
+}
+
+@keyframes extension-floorplanner-slow-fade-out{
+	0% {opacity:0;}
+	3% {opacity:0;}
+	6% {opacity:.3;}
+	99% {opacity:0;}
+ 	100% {opacity:0;}
+}
+
+
+
+#extension-floorplanner-plan-exists-warning{
+	display:none;
+	color:red;
+}
+
+#extension-floorplanner-myModal{
+	display:none;
+	box-shadow:2px 1px 3px #ccc;
+}
+
+
+#extension-floorplanner-panel-level2{
+	position:fixed;
+	left:100px;
+	top:5vh;
+	width:auto;
+	box-sizing:border-box;
+	max-height:90vh;
+	overflow:auto;
+	z-index:5;
+	border-top-right-radius:1rem;
+	border-bottom-right-radius:1rem;
+}
+
+
+#extension-floorplanner-panel-level2 > div{
+	/*box-shadow:2px 1px 3px #ccc;*/
+	display:none;
+}
+
+
+.extension-floorplanner-slider-value{
+	font-weight:bold;
+}
+.extension-floorplanner-scale-slider-min-max > span{font-size:.6rem;line-height:.4rem;margin-top:.1rem;}
+.extension-floorplanner-scale-slider-min-max > span:last-of-type{
+	text-align:right;
+}
+
+.extension-floorplanner-menu-area{
+	background-color:#bbb;
+	border-radius:.5rem;
+	padding:.1rem .5rem .8rem .5rem;
+	box-sizing:border-box;
+	margin-bottom:.5rem;
+	color:black;
+}
+
+.extension-floorplanner-menu-area p{
+	text-align:center;
+}
+
+#extension-floorplanner-scale-link-toggle-button-container{
+	text-align:center;
+	padding:0 .5rem;
+}
+#extension-floorplanner-scale-link-toggle-button{
+	background-color:rgba(0,0,0,.2);
+	border-radius:.5rem;
+	font-size:2rem;
+	margin:1rem auto;
+	cursor:pointer;
+	max-width:6rem;
+	height:3rem;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+#extension-floorplanner-scale-link-toggle-button:hover{
+	background-color:rgba(0,0,0,.5);
+}
+
+
+#extension-floorplanner-energy_list{
+	/*box-shadow:2px 2px 3px #ccc;*/
+	display:none;
+	background:#fff;
+	padding:2rem;
+	position:relative;
+	left:0;
+	top:0;
+	width:600px; 
+	max-width:calc(100vw - 150px);
+	box-sizing:border-box;
+}
+
+#extension-floorplanner-energy_list > div > p{
+	width:100%;
+	font-weight:bold;
+}
+#extension-floorplanner-energy_list > div{
+	margin:.5rem;
+	/*
+	padding:1rem;
+	border:1px solid #ddd;
+	*/
+	border-radius:.5rem;
+	display:flex;
+	flex-wrap:wrap;
+}
+
+
+
+#extension-floorplanner-content #extension-floorplanner-energy_list button{
+	word-spacing: 10rem;
+	font-size:.8rem;
+	width:5rem;
+    /*-webkit-filter: contrast(0) sepia(100%) hue-rotate(190deg) saturate(2000%) brightness(100%);*/
+    filter: saturate(0%);
+	padding:.5rem 0.7rem 0.5rem 0.7rem;
+	margin:.3rem;
+}
+#extension-floorplanner-content #extension-floorplanner-energy_list button:hover{
+	color:white;
+}
+
+#extension-floorplanner-content #extension-floorplanner-energy_list button::first-letter{
+	font-size:2rem;
+	display:block;
+	width:100%;
+	line-height:2.7rem;
+    margin-bottom:1rem;
+	border-bottom:1rem solid transparent;
+	padding-bottom:1rem;
+}
+
+
+
+
+#extension-floorplanner-door_list,
+#extension-floorplanner-window_list{
+	width:100px;
+	padding:1rem;
+	background-color:white;
+	margin-top: calc(50vh - 10rem);
+	box-sizing:border-box;
+	border-top-right-radius:1rem;
+	border-bottom-right-radius:1rem;
+}
+
+
+
+
+
+
+
+
+
+#extension-floorplanner-distance_mode{
+	display:flex;
+	justify-content:center;
+	
+}
+
+.extension-floorplanner-tape-measure-icon{ 
+	width:2.5rem;
+	height:2.5rem;
+	overflow:hidden;
+	background-repeat: no-repeat;
+	background-size: 10rem;
+	background-image: url('../images/tape_measure.svg');
+	background-position: left center;
+	transition: width 1s ease-in-out;
+	opacity:.8;
+}
+#extension-floorplanner-distance_mode:hover .extension-floorplanner-tape-measure-icon{
+	width:5rem;
+	transition: width 1s ease-in-out;
+	opacity:1;
+}
+.extension-floorplanner-tape-measure-icon-end{ 
+	width: 2px;
+    min-width: 1px;
+    height: 2.5rem;
+    overflow: hidden;
+    background-repeat: repeat-x;
+    background-size: 4px 1.5rem;
+    background-image: url(../images/tape_measure_end.svg);
+    background-position: left center;
+}
+
+button.extension-floorplanner-btn-success .extension-floorplanner-tape-measure-icon{
+	width:5rem;
+	opacity:1;
+}
+
+
+
+g#extension-floorplanner-boxbind{
+	opacity:.7;
+}
+
+
+#extension-floorplanner-content .extension-floorplanner-pull-right p{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+#extension-floorplanner-content .extension-floorplanner-pull-right button{
+	line-height:0;
+	width:0;
+	padding:2rem;
+	font-size:1.5rem;
+	min-height:2rem;
+	min-width:2rem;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	margin: 0 0 .6rem .6rem;
+}
+
+body.touch #extension-floorplanner-content .extension-floorplanner-pull-right button{
+	margin:.4rem;
+}
+
+body.touch #extension-floorplanner-content .extension-floorplanner-floorplan-item{
+    width: 6.4rem;
+    max-width: 6.4rem;
+}
+
+
+
+#extension-floorplanner-boxArea{
+	opacity:.5;
+}
+
+/*
+#extension-floorplanner-content .extension-floorplanner-circle_css_1 {
+	stroke:#5cba79;
+	stroke-width:0;
+	fill:#5cba79;
+	fill-opacity:0.9;
+	animation: extension-floorplanner-myAnim 0.1s linear infinite;
+}
+*/
+
+
+#extension-floorplanner-content #extension-floorplanner-objBoundingBox{
+	width:200px;
+}
+#extension-floorplanner-content #extension-floorplanner-objBoundingBox p{
+	margin-bottom:.2rem;
+	font-weight:bold;
+}
+
+#extension-floorplanner-title{
+	margin:0;
+	font-size:1rem;
+	font-family:sans-serif;
+}
+
+
+
+#extension-floorplanner-wall-slider-container{
+	height:15rem;
+	max-height:50vh;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+#extension-floorplanner-content #extension-floorplanner-wallWidth{
+	width:15rem;
+	transform:rotate(-90deg);
+	max-width:48vh;
+}
+
+
+/*  TEXT MODAL  */
+
+#extension-floorplanner-textToLayerLabel{
+	margin:0;
+}
+
+#extension-floorplanner-text-suggestions-select{
+	width:3rem;
+    padding: 0.75rem 0;
+    font-size: 1.5rem;
+	background-color: #999;
+	border-radius: 0.5rem;
+}
+
+#extension-floorplanner-content #extension-floorplanner-tool-root #extension-floorplanner-text-toggle-emojis-button{
+	padding:.75rem;
+	font-size:1.5rem;
+}
+
+#extension-floorplanner-text-emojis-list{
+	display:flex;
+	flex-wrap:wrap;
+	width:100%;
+	padding:1rem;
+	border-radius:.2rem;
+	background-color:rgba(0,0,0,.1);
+	height:12rem;
+	max-height:50vh;
+	overflow:auto;
+	margin-bottom:1rem;
+	border:1px solid rgba(0,0,0,.3);
+	box-sizing:border-box;
+	overflow:scroll;
+}
+#extension-floorplanner-text-emojis-list > span{
+	display:inline-block;
+	margin:.3rem;
+	font-size:1.5rem;
+	cursor:pointer;
+	color:#333;
+}
+#extension-floorplanner-content.extension-floorplanner-touch #extension-floorplanner-text-emojis-list > span{
+	font-size:1.7rem;
+	margin:.4rem;
+}
+
+#extension-floorplanner-textToLayer.extension-floorplanner-hide-emojis-list #extension-floorplanner-text-emojis-list{
+	display:none;
+}
+
+#extension-floorplanner-labelBox{
+	width:30rem;
+	height:auto;
+	font-size:1.1rem;
+	border-radius:5px;
+	background-color:white;
+	color:#333;
+	border-bottom:2px dotted black;
+	padding:1rem;
+	box-sizing:border-box;
+	margin:1rem 0;
+	background-color:#ddd;
+	flex-grow:1;
+}
+
+
+
+
+/*
+#extension-floorplanner-content #extension-floorplanner-tool-root  g#extension-floorplanner-boxbind{
+	animation: extension-floorplanner-pulsate 0.3s linear infinite;
+}
+*/
+
+
+
+#extension-floorplanner-content #extension-floorplanner-tool-root:not(.extension-floorplanner-do-not-pulsate) #extension-floorplanner-boxbind path {
+	animation: extension-floorplanner-bg-animation .5s linear infinite;
+}
+
+@keyframes extension-floorplanner-pulsate{
+	0% {opacity:.5;}
+ 	50% {opacity:1;}
+ 	100% {opacity:.5;}
+}
+
+
+@keyframes extension-floorplanner-col {
+	0%{stroke:green;}
+	33% {stroke:blue;}
+	66% {stroke:red;}
+	100% {stroke:green}
+}
+
+@keyframes extension-floorplanner-bg-animation {
+	0%{fill:green;}
+	33% {fill:blue;}
+	66% {fill:red;}
+	100% {fill:green}
+}
+
+
+
+
+
+
+
+
+
+
+#extension-floorplanner-floorplans-list{
+	position:fixed;
+	right:-10rem;
+	top:16rem;
+	bottom:9rem;
+	overflow:auto;
+	display:block;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+	pointer-events:none;
+}
+
+#extension-floorplanner-floorplans-list > li{
+	pointer-events:auto;
+}
+
+
+#extension-floorplanner-floorplans-list:empty{
+	display:none;
+}
+
+
+.extension-floorplanner-floorplan-item{
+	width:6rem;
+	max-width:6rem;
+	border-radius:.5rem;
+	background-color:rgba(128,128,128,.5);
+	margin-bottom:.5rem;
+	padding:0;
+	cursor:pointer;
+	overflow:hidden;
+	box-sizing:border-box;
+}
+.extension-floorplanner-floorplan-item:hover{
+	background-color:#ccc;
+	color:black;
+}
+.extension-floorplanner-floorplan-item-icon{
+	width:100%;
+	height:auto;
+	cursor:pointer;
+}
+.extension-floorplanner-floorplan-item-icon > svg{
+	pointer-events:none;
+}
+.extension-floorplanner-floorplan-item-name{
+	display:block;
+	text-align:center;
+	color:black;
+	font-size:0.85rem;
+	padding:.4rem .4rem .4rem .4rem;
+	background-color:rgba(255,255,255,.4);
+}
+
+
+
+#extension-floorplanner-upload-background-image-label{
+	padding: 0.3rem;
+	width: 40%;
+    margin-bottom: 6px;
+    transition: all 0.3s;
+    /*padding: 0.5rem 0.7rem;*/
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #bbb;
+    cursor: pointer;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	color:inherit;
+}
+#extension-floorplanner-upload-background-image-label:hover{
+	background: #08d;
+}
+
+/* style="box-shadow:2px 2px 3px #ccc;display:none;background:#fff;border-radius: 0 5px 5px 0; padding:10px;position:absolute;top:calc(50vh - 10rem);left:0;width:100px" */
+
+
+#extension-floorplanner-current-filename-container{
+	opacity:.3;
+	text-align:center;
+	opacity:.7;
+	z-index:2;
+	position:absolute;
+	top:1rem;
+	left:100px;
+	width:calc(100vw - 100px);
+	font-size:1rem;
+	color:#08d;
+	pointer-events:none;
+}
+
+#extension-floorplanner-current-filename{
+	font-style:italic;
+}
+
+.extension-floorplanner-text-bg{
+  background-color: rgba(255,255,255,.7);
+  display: inline-flex;
+  align-items:center;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+}
+.extension-floorplanner-text-bg > *{
+	display:inline-block;margin:0 .3rem;
+}
+
+
+#extension-floorplanner-save-to-server{
+	margin-bottom:0;
+}
+#extension-floorplanner-new-file-button{
+	opacity:.8;
+}
+
+
+.extension-floorplanner-object-item{
+	background-color:rgba(0,0,0,.1);
+	padding:.3rem;
+	margin-bottom:.1rem;
+	width:1.5rem;
+	text-align:center;
+	cursor:pointer;
+}
+
+
+/*
+#extension-floorplanner-content #extension-floorplanner-layer_list-checkboxes .extension-floorplanner-funkyradio-info label:after{
+	content:'X';
+	z-index:300;
+}
+*/
+/*
+#extension-floorplanner-content #extension-floorplanner-layer_list-checkboxes .extension-floorplanner-funkyradio-info input + label:after{
+	width:4rem;
+	height:2rem;
+	background-color:blue;
+	z-index:3;
+}
+*/
+/*
+, #extension-floorplanner-content .extension-floorplanner-funkyradio-info input[type="checkbox"]:checked ~ label:before
+*/
+
+.extension-floorplanner-funkyradio-info-icon{
+	position:absolute;
+	left:3.2rem;
+}
+
+#extension-floorplanner-content #extension-floorplanner-layer_list-checkboxes .extension-floorplanner-funkyradio-info{
+	width:4.5rem;
+	z-index:2;
+}
+
+#extension-floorplanner-layer_list-checkboxes .extension-floorplanner-funkyradio label{
+	width:9rem;
+}
+
+
+
+/*  drag and drop floorplan icons*/
+.extension-floorplanner-slist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.extension-floorplanner-slist li {
+  /*margin: 10px;
+  padding: 15px;
+  border: 1px solid #dfdfdf;
+  background: #f5f5f5;*/
+}
+
+.extension-floorplanner-slist li.extension-floorplanner-slist-hint {
+  border: 1px solid #ffc49a;
+  background: #feffb4;
+}
+.extension-floorplanner-slist li.extension-floorplanner-slist-active {
+  border: 1px solid #ffa5a5;
+  background: #ffe7e7;
+}
+
+
+/*  VIEW MODE  */
+
+
+.extension-floorplanner-view-mode #extension-floorplanner-boxinfo,
+.extension-floorplanner-view-mode #extension-floorplanner-areaValue,
+.extension-floorplanner-view-mode #extension-floorplanner-panel,
+.extension-floorplanner-view-mode #extension-floorplanner-boxgrid{
+	display:none!important;
+}
+
+.extension-floorplanner-view-mode #extension-floorplanner-svg-container-bg-image{
+	opacity:1;
+}
+
+
+.extension-floorplanner-view-mode #extension-floorplanner-lin{
+	opacity:0;
+}
+
+#extension-floorplanner-start-floorplanner-button{
+	display:none;
+	position:absolute;
+	z-index:100;
+	bottom: 2rem;
+	left: 2rem;
+	background-image: url(../images/menu-icon.svg);
+	cursor: pointer;
+    width: 5.6rem;
+    height: 5.6rem;
+    border-radius: 2.8rem;
+    padding: 0;
+    background-color: #5d9bc7;
+    border: none;
+    background-size: 80%;
+	background-position:center;
+    background-repeat: no-repeat;
+	user-select: none;
+	outline: 0;
+	/*z-index: 100;*/
+}
+#extension-floorplanner-content #extension-floorplanner-tool-root #extension-floorplanner-start-floorplanner-button{
+	border-radius:50%;
+	background-size:70%;
+	background-position:center;
+}
+
+.extension-floorplanner-view-mode #extension-floorplanner-start-floorplanner-button{
+	display:flex;
+}
+
+#extension-floorplanner-delete-button{
+	background-color: #fc4e4e;
+}
+
+.extension-floorplanner-floorplan-icon-current{
+	background-color:#08d!important;
+}
+
+#extension-floorplanner-boxinfo{
+	position:absolute;
+	bottom:10px;
+	left:210px;
+	font-size:1.5em;
+	color:#08d;
+}
+
+#extension-floorplanner-content #extension-floorplanner-settings{
+	display:none;
+	width:200px;
+}
+
+
+
+
+
+#extension-floorplanner-moveBox{
+	position:absolute;
+	/*right:-200px;*/
+	right:-16rem;
+	top:1rem;
+	color:#08d;
+	background:transparent;
+	z-index:2;
+	text-align:center;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in;
+}
+
+#extension-floorplanner-zoomBox2,
+#extension-floorplanner-zoomBox{
+	position:absolute;
+	z-index:100;
+	/*right:-150px;*/
+	right:-10rem;
+	/*bottom:20px;*/
+	text-align:center;
+	background:transparent;
+	padding:0px;
+	color:#fff;
+	transition-duration: 0.2s;transition-timing-function: ease-in;
+	
+}
+
+#extension-floorplanner-zoomBox2{
+	top:1rem;
+	/*right:-165px;*/
+	right:-10rem;
+	
+}
+.extension-floorplanner-view-mode #extension-floorplanner-moveBox,
+.extension-floorplanner-view-mode #extension-floorplanner-zoomBox2{
+	display:none;
+}
+
+.extension-floorplanner-zoom-in-out-button{
+	opacity:.5;
+}
+
+#extension-floorplanner-scaleVal{
+	width:60px;
+	height:20px;
+	background:#4b79aa;
+	border-radius:4px;
+	margin-right:1rem;
+	pointer-events:none;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+
+#extension-floorplanner-start-floorplanner-button-container{
+	position:fixed;
+	bottom:1rem;
+	left:1rem;
+}
+
+#extension-floorplanner-modal-new-floorplan-name-input{
+	background-color:#eee;
+	color:black;
+	padding:1rem;
+	font-size:1.6rem;
+	margin-bottom:2rem;
+	width:100%;
+	box-sizing: border-box;
+	border-radius:.5rem;
+	height:auto;
+}
+
+#extension-floorplanner-clone-button{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+#extension-floorplanner-content button#extension-floorplanner-fire-exit:first-letter{
+	transform:rotate(45deg);
+	transform: scaleX(-1);
+}
+
+
+/*
+@media screen and ( max-height: 950px ){
+	#extension-floorplanner-content #extension-floorplanner-panel button{
+		padding:.3rem;
+	}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+@media screen and ( max-height: 850px ){
+	.extension-floorplanner-vertical-shrinker{
+		display:flex;
+		justify-content:space-between;
+	}
+	.extension-floorplanner-vertical-shrinker > *{
+		width:47%;
+		max-width:47%;
+	}
+	.extension-floorplanner-vertical-shrinker .extension-floorplanner-button-text{display:none}
+	
+	.extension-floorplanner-vertical-shrinker .extension-floorplanner-unicode-icon-large{
+		font-size:2.1rem;
+	}
+}
+
+
+@media screen and ( max-height: 750px ){
+	.extension-floorplanner-vertical-shrinker2{
+		display:flex;
+		justify-content:space-between;
+	}
+	.extension-floorplanner-vertical-shrinker2 > *{
+		width:47%;
+		max-width:47%;
+	}
+	.extension-floorplanner-vertical-shrinker2 button{
+		margin-bottom:auto;
+	}
+	
+	#extension-floorplanner-wall-buttons .extension-floorplanner-vertical-shrinker2{
+		margin-bottom:.1rem;
+	}
+	
+	.extension-floorplanner-vertical-shrinker2 .extension-floorplanner-unicode-icon-large{
+		font-size:1.1rem;
+	}
+	
+	#extension-floorplanner-node_mode{
+		font-size:1.1rem;
+	}
+	
+	#extension-floorplanner-content button{
+		padding:.3rem .5rem;
+	}
+}
+
+
+@media screen and ( max-height: 650px ){
+	.extension-floorplanner-vertical-shrinker3{
+		display:flex;
+		justify-content:space-between;
+	}
+	.extension-floorplanner-vertical-shrinker3 > *{
+		width:47%;
+		max-width:47%;
+	}
+	
+	.extension-floorplanner-vertical-shrinker3 .extension-floorplanner-unicode-icon-large{
+		font-size:2rem;
+	}
+	
+	#extension-floorplanner-select_mode > span{
+		font-size:1.1rem;
+	}
+	
+	#extension-floorplanner-content #extension-floorplanner-panel #extension-floorplanner-select_mode{
+	    padding: .8rem 0 1rem 0;
+	}
+	
+	#extension-floorplanner-content button{
+		padding:.2rem .5rem;
+	}
+	
+}
+
+
+@media screen and ( max-height: 600px ){
+	#extension-floorplanner-content #extension-floorplanner-panel button{
+		padding:.2rem;
+	}
+}
+
+
+@media screen and ( max-height: 600px ){
+	#extension-floorplanner-content #extension-floorplanner-panel button{
+		padding:.2rem;
+	}
+}
+
+@media screen and (max-height: 799px), (max-width: 850px) {
+	#extension-floorplanner-content .extension-floorplanner-pull-right button{
+		padding:1rem;
+		font-size:1rem;
+		min-width:1rem;
+		min-height:1rem;
+	}
+	#extension-floorplanner-floorplans-list{
+		top:10rem;
+	}
+	/*
+	#extension-floorplanner-moveBox{
+		right: -215px;
+	}
+	#extension-floorplanner-zoomBox{
+		right: -165px;
+	}
+	#extension-floorplanner-scaleVal{
+		margin-right:0;
+	}
+	*/
+	/*
+	#extension-floorplanner-floorplans-list{
+		right:1rem;
+	}
+	*/
+
+	#extension-floorplanner-boxinfo{
+		display:none;
+	}
+	
+	#extension-floorplanner-energy_list{
+		padding:0;
+		margin:0;
+	}
+	#extension-floorplanner-energy_list > div{
+		padding:0;
+		border:none;
+	}
+	
+	.extension-floorplanner-floorplan-item{
+		width:4rem;
+		padding:0;
+	}
+	.extension-floorplanner-floorplan-item .extension-floorplanner-floorplan-item-name{
+		display:none;
+	}
+	
+	#extension-floorplanner-content button{
+		padding:.4rem .5rem;
+	}
+	/*
+	#extension-floorplanner-floorplans-list{
+		top:12rem;
+		bottom:8rem;
+	}
+	*/
+	#extension-floorplanner-content #extension-floorplanner-areaValue{
+		bottom:5rem;
+		right:1rem;
+		padding:0;
+	}
+	
+	#extension-floorplanner-zoomBox2{
+		/*right:-200px;*/
+		right:-12rem;
+	}
+}
+
+
+
+
+
+
+
+
+/*@media (prefers-color-scheme: dark) {} */
+
+#extension-floorplanner-content.extension-floorplanner-dark-mode #extension-floorplanner-tool-root {
+    background-color:black;
+	color:#666;
+}
+  
+#extension-floorplanner-content.extension-floorplanner-dark-mode #extension-floorplanner-tool-root button{
+	color:black
+}
+#extension-floorplanner-content.extension-floorplanner-dark-mode #extension-floorplanner-tool-root button.extension-floorplanner-btn-done{
+	color:white
+}
+  
+#extension-floorplanner-content.extension-floorplanner-dark-mode #extension-floorplanner-tool-root #extension-floorplanner-text_mode.extension-floorplanner-btn-success > span{
+  	color:white;
+}  
+#extension-floorplanner-content.extension-floorplanner-dark-mode #extension-floorplanner-areaValue {
+    color:rgba(255,255,255,.4);
+}
+#extension-floorplanner-content.extension-floorplanner-dark-mode #extension-floorplanner-panel{
+	background-color:#444;
+}
+#extension-floorplanner-content.extension-floorplanner-dark-mode #extension-floorplanner-panel #extension-floorplanner-select_mode{
+	color:white;
+}
+  
+#extension-floorplanner-content.extension-floorplanner-dark-mode #extension-floorplanner-panel .extension-floorplanner-leftBox button{
+	text:white;
+}
+#extension-floorplanner-content.extension-floorplanner-dark-mode  .extension-floorplanner-floorplan-item-name{
+	color:white;
+}
+  
+#extension-floorplanner-content.extension-floorplanner-dark-mode  .extension-floorplanner-text-bg{
+	background-color:rgba(0,0,0,.7);
+}
+
+#extension-floorplanner-content.extension-floorplanner-dark-mode  #extension-floorplanner-upload-background-image-label{
+	color:black;
+}
+
+
+
