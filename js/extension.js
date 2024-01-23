@@ -10044,7 +10044,7 @@
                 if (document.body.classList.contains('cups-printing')) {
                     // send svg to Candle backend to print
 					
-					if(current_filename != null && typeof floorplans[current_filename] != 'undefined' && && typeof floorplans[current_filename].svg_data != 'undefined'){
+					if(current_filename != null && typeof floorplans[current_filename] != 'undefined' && typeof floorplans[current_filename].svg_data != 'undefined'){
 			            console.log("printing SVG via controller: ", floorplans[current_filename].svg_data);
 						window.API.postJson(
 			                `/extensions/floorplanner/api/ajax`, {
@@ -10054,6 +10054,9 @@
 
 			            ).then((body) => {
 							console.log("floorplanner: print response: ", body);
+							
+							document.getElementById('extension-floorplanner-boxinfo').innerHTML = body.state;
+							
 			                //console.log(body);
 			                //this.show_list(body['data']);
 

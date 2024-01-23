@@ -109,7 +109,7 @@ class FloorplannerAPIHandler(APIHandler):
             with open(self.persistence_file_path) as f:
                 self.persistent_data = json.load(f)
                 if self.DEBUG:
-                    print('self.persistent_data loaded from file: ' + str(self.persistent_data))
+                    print('self.persistent_data loaded from file. ') # + str(self.persistent_data))
                 
         except Exception as ex:
             #pass
@@ -305,12 +305,17 @@ class FloorplannerAPIHandler(APIHandler):
                     
                     try:
                         if 'svg' in request.body:
-                            
+                            #print("request.body['svg']: " + str(request.body['svg']))
+                            #print("type: " + str(type(request.body['svg'])))
                             self.check_photo_printer()
                             
+                            #print("self.printable_file_path: " + str(self.printable_file_path))
+                            
                             with open(self.printable_file_path, 'w+') as f:
-                                if type(request.body[svg]) == 'string': 
-                                    f.write(request.body[svg])
+                                
+                                if isinstance(request.body['svg'], str):
+                                    
+                                    f.write(request.body['svg'])
                                     if self.DEBUG:
                                         print("saved svg data to file: " + str(self.printable_file_path))
                                     
@@ -319,7 +324,7 @@ class FloorplannerAPIHandler(APIHandler):
                                         if self.DEBUG:
                                             print("printing using cups. Print command: \n" + str(print_command))
                                         os.system(print_command)
-                                        state = "Photo sent to (network) printer"
+                                        state = "Floorplan image sent to (network) printer"
                                         
                                     elif self.peripage_printer_available:
                                         if os.path.isdir(self.external_picture_drop_dir):
@@ -337,6 +342,10 @@ class FloorplannerAPIHandler(APIHandler):
                         
                                     else:
                                         state = 'No printer available?'
+                                else:
+                                    state = 'SVG data was not a string?'
+                                        
+                                        
                         else:
                             if self.DEBUG:
                                 print("file to be printed did not exist")
