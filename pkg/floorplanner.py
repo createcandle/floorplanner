@@ -12,9 +12,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
 #from time import sleep, time
 #import random
 #import datetime
-#import subprocess
+import subprocess
 #import threading
-#import requests
+import requests
 #import base64
 
 try:
@@ -54,18 +54,19 @@ class FloorplannerAPIHandler(APIHandler):
         """Initialize the object."""
         #print("INSIDE API HANDLER INIT")
         
+        self.ready = False
         self.addon_name = 'floorplanner'
         self.DEBUG = False
             
         #self.things = [] # Holds all the things, updated via the API. Used to display a nicer thing name instead of the technical internal ID.
             
-        self.fullscreen_delay = 60
-        self.search_url = "https://swisscows.com/en/web?query="
+        self.per_browser_settings = False
         
-        self.restore_tabs = True
-        self.history_length = 10
-        self.slideshow = False
-            
+        self.cups_printer_available = False
+        self.peripage_printer_available = False
+        
+        self.persistent_data = {}
+        
         try:
             manifest_fname = os.path.join(
                 os.path.dirname(__file__),
@@ -93,29 +94,41 @@ class FloorplannerAPIHandler(APIHandler):
         except Exception as e:
             print("Failed to init UX extension API handler: " + str(e))
         
-        try:
-            self.addon_path =  os.path.join(self.user_profile['addonsDir'], self.addon_name)
-            #self.persistence_file_folder = os.path.join(self.user_profile['configDir'])
-            self.persistence_file_path = os.path.join(self.user_profile['dataDir'], self.addon_name, 'persistence.json')
+        
+        # PATHS
+        self.addon_path =  os.path.join(self.user_profile['addonsDir'], self.addon_name)
+        #self.persistence_file_folder = os.path.join(self.user_profile['configDir'])
+        self.persistence_file_path = os.path.join(self.user_profile['dataDir'], self.addon_name, 'persistence.json')
+        
+        self.printable_file_path = os.path.join(self.user_profile['dataDir'], 'floorplan.svg')    
+        self.external_picture_drop_dir = os.path.join(self.user_profile['dataDir'], 'privacy-manager', 'printme')
             
-        except Exception as e:
-            print("Failed to make paths: " + str(e))
-            
+        
         # Get persistent data
-        self.persistent_data = {}
         try:
             with open(self.persistence_file_path) as f:
                 self.persistent_data = json.load(f)
                 if self.DEBUG:
                     print('self.persistent_data loaded from file: ' + str(self.persistent_data))
                 
-        except:
-            pass
-            #if self.DEBUG:
-            #    print("could not load persistent data (if you just installed the add-on then this is normal)")
+        except Exception as ex:
+            #pass
+            if self.DEBUG:
+                print("could not load persistent data (if you just installed the add-on then this is normal): " + str(ex))
+        
+        if not 'floorplans' in self.persistent_data:
+            self.persistent_data['floorplans'] = {}
+            
+        if not 'visible_things' in self.persistent_data:
+            self.persistent_data['visible_things'] = {}
+            
+        if not 'settings' in self.persistent_data or self.per_browser_settings == True:
+            self.persistent_data['settings'] = None
 
         
-
+        self.check_photo_printer()
+        self.ready = True
+        
 
     # Read the settings from the add-on settings page
     def add_from_config(self):
@@ -129,44 +142,69 @@ class FloorplannerAPIHandler(APIHandler):
             config = database.load_config()
             database.close()
             
-        except:
-            print("Error! Failed to open settings database.")
+        except Exception as ex:
+            print("Error! Failed to open settings database: " + str(ex))
             self.close_proxy()
         
         if not config:
             print("Error loading config from database")
             return
 
+        if 'Per browser settings' in config:
+            self.per_browser_settings = bool(config['Per device settings'])
+            if self.DEBUG:
+                print("-Per device settings preference was in config: " + str(self.per_browser_settings))
+
         if 'Debugging' in config:
             self.DEBUG = bool(config['Debugging'])
             if self.DEBUG:
                 print("-Debugging preference was in config: " + str(self.DEBUG))
 
-        if 'Restore tabs' in config:
-            self.restore_tabs = bool(config['Restore tabs'])
-            if self.DEBUG:
-                print("-Restore tabs preference was in config: " + str(self.restore_tabs))
-                
-        if 'Browsing history length' in config:
-            self.history_length = int(config['Browsing history length'])
-            if self.DEBUG:
-                print("-Browsing history length preference was in config: " + str(self.history_length))
-                
-        if 'Fullscreen delay' in config:
-            self.fullscreen_delay = int(config['Fullscreen delay'])
-            if self.DEBUG:
-                print("-Fullscreen delay preference was in config: " + str(self.fullscreen_delay))
-                
-        if 'Slideshow' in config:
-            self.slideshow = bool(config['Slideshow'])
-            if self.DEBUG:
-                print("-Slideshow preference was in config: " + str(self.slideshow))
-                
-        if 'Search URL' in config:
-            self.search_url = str(config['Search URL'])
-            if self.DEBUG:
-                print("-Search url preference was in config: " + str(self.search_url))
         
+        
+    def check_photo_printer(self):
+        if self.DEBUG:
+            print("Checking if a cups or bluetooth photo printer is paired")
+        
+        self.cups_printer_available = False
+        self.peripage_printer_available = False
+
+        try:
+            
+            lpstat_output = run_command("lpstat -v")
+            if 'No destinations added' in lpstat_output:
+                if self.DEBUG:
+                    print("No network printers connected")
+                
+                
+                # See if there is a Peripage photo printer connected
+                if os.path.isdir(self.external_picture_drop_dir):
+                    if self.DEBUG:
+                        print("privacy manager photo drop-off dir existed")
+                    bluetooth_printer_check = run_command('sudo bluetoothctl devices Paired')
+                    if self.DEBUG:
+                        print("bluetooth_printer_check: " + str(bluetooth_printer_check))
+                    if 'peripage' in bluetooth_printer_check.lower():
+                        self.peripage_printer_available = True
+                        if self.DEBUG:
+                            print("paired bluetooth printer was detected")
+                        return True
+              
+            
+            
+            else:
+                if self.DEBUG:
+                    print("a cups printer is connected")
+                self.cups_printer_available = True
+                return True
+            
+                    
+        except Exception as ex:
+            print("Error while checking for printer: " + str(ex))
+        
+        return False
+
+
 
 
     def handle_request(self, request):
@@ -189,19 +227,132 @@ class FloorplannerAPIHandler(APIHandler):
                 
                 # INIT
                 if action == 'init':
+                    if self.DEBUG:
+                        print("handling init request")
                     
+                    #print("request.body: " + str(type(request.body)));
+                        
+                    try:
+                        if 'visible_things' in request.body:
+                            self.persistent_data['visible_things'] = request.body['visible_things']
+                            
+                        if 'floorplans' in request.body:
+                            self.persistent_data['floorplans'] = request.body['floorplans']
+                            
+                        if 'settings' in request.body:
+                            self.persistent_data['settings'] = request.body['settings']
+                    
+                        self.save_persistent_data()
+                    
+                    except Exception as ex:
+                        if self.DEBUG:
+                            print("Error handling save: " + str(ex))
+                        
                     return APIResponse(
                       status=200,
                       content_type='application/json',
                       content=json.dumps({
                                         'action':action,
-                                        'search_url':str(self.search_url),
-                                        'fullscreen_delay':self.fullscreen_delay,
-                                        'restore_tabs':self.restore_tabs,
-                                        'history_length':self.history_length,
-                                        'slideshow':self.slideshow
+                                        'debug':self.DEBUG,
+                                        'visible_things':self.persistent_data['visible_things'],
+                                        'floorplans':self.persistent_data['floorplans'],
+                                        'settings':self.persistent_data['settings'],
                                         }),
                     )
+                                        # 'per_browser_settings':self.per_browser_settings
+                
+                
+                
+                # INIT
+                if action == 'save':
+                    if self.DEBUG:
+                        print("handling save request")
+                    
+                    #print("request.body: " + str(type(request.body)));
+                    state = False
+                    try:
+                        if 'visible_things' in request.body:
+                            self.persistent_data['visible_things'] = request.body['visible_things']
+                            
+                        if 'floorplans' in request.body:
+                            self.persistent_data['floorplans'] = request.body['floorplans']
+                            
+                        if 'settings' in request.body:
+                            self.persistent_data['settings'] = request.body['settings']
+                    
+                        self.save_persistent_data()
+                        state = True
+                    
+                    except Exception as ex:
+                        if self.DEBUG:
+                            print("Error handling save: " + str(ex))
+                        
+                    return APIResponse(
+                      status=200,
+                      content_type='application/json',
+                      content=json.dumps({
+                                        'state':state,
+                                        'action':action,
+                                        }),
+                    )
+                
+                
+                
+                elif action == 'print':
+                    if self.DEBUG:
+                        print("printing")
+                    state = 'unable to print'
+                    
+                    try:
+                        if 'svg' in request.body:
+                            
+                            self.check_photo_printer()
+                            
+                            with open(self.printable_file_path, 'w+') as f:
+                                if type(request.body[svg]) == 'string': 
+                                    f.write(request.body[svg])
+                                    if self.DEBUG:
+                                        print("saved svg data to file: " + str(self.printable_file_path))
+                                    
+                                    if self.cups_printer_available:
+                                        print_command = 'lp -o printer-error-policy=abort-job ' + str(self.printable_file_path)
+                                        if self.DEBUG:
+                                            print("printing using cups. Print command: \n" + str(print_command))
+                                        os.system(print_command)
+                                        state = "Photo sent to (network) printer"
+                                        
+                                    elif self.peripage_printer_available:
+                                        if os.path.isdir(self.external_picture_drop_dir):
+                                            to_filename = os.path.join(self.external_picture_drop_dir, str(request.body['filename']))
+                                            copy_command = 'mv -n ' + str(from_filename) + ' ' + str(to_filename)
+                                            if self.DEBUG:
+                                                print("move command: " + str(copy_command))
+                                            os.system(copy_command)
+                                            state = "Floorplan sent to bluetooth printer"
+                                            # TODO: can it even print SVG files?
+                                        else:
+                                            if self.DEBUG:
+                                                print("photo drop dir (no longer) exists?")
+                                            state = 'peripage printer drop off directory did not exist'
+                        
+                                    else:
+                                        state = 'No printer available?'
+                        else:
+                            if self.DEBUG:
+                                print("file to be printed did not exist")
+                            state = 'no file to print provided'
+                        
+                        return APIResponse(
+                          status=200,
+                          content_type='application/json',
+                          content=json.dumps({'state':state}),
+                        )
+                    except Exception as ex:
+                        print("Error sending photo to printer: " + str(ex))
+                        return APIResponse(
+                          status=500,
+                        )
+                
                 
                 # UNSUPPORTED ACTION
                 else:
@@ -264,14 +415,14 @@ class FloorplannerAPIHandler(APIHandler):
                 if self.DEBUG:
                     print("Persistence file existed. Will try to save to it.")
 
-            with open(self.persistence_file_path) as f:
-                if self.DEBUG:
-                    print("saving: " + str(self.persistent_data))
-                try:
-                    json.dump( self.persistent_data, open( self.persistence_file_path, 'w+' ) )
-                except Exception as ex:
-                    print("Error saving to persistence file: " + str(ex))
+            try:
+                json.dump( self.persistent_data, open( self.persistence_file_path, 'w+' ) )
                 return True
+            except Exception as ex:
+                print("Error saving to persistence file: " + str(ex))
+            
+            return False
+                
             #self.previous_persistent_data = self.persistent_data.copy()
 
         except Exception as ex:

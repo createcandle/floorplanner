@@ -13,7 +13,7 @@
 
 #extension-floorplanner-border-tab-menu,
 #extension-floorplanner-border-root #extension-floorplanner-border-menu{
-	padding-left:8.6rem;
+	padding-left:8.6rem; 
 }
 
 
@@ -1213,6 +1213,9 @@ body:not(.developer) .extension-floorplanner-show-if-developer{
 	pointer-events:none;
 }
 
+.extension-floorplanner-scale-linked #extension-floorplanner-scale-link-toggle-button{
+	background-color:#08d;
+}
 
 #extension-floorplanner-content .extension-floorplanner-vertical-flex-between{
 	display:flex;
@@ -1915,6 +1918,8 @@ body.touch #extension-floorplanner-content .extension-floorplanner-floorplan-ite
 #extension-floorplanner-content #extension-floorplanner-settings{
 	display:none;
 	width:200px;
+	font-size:1.3rem;
+	line-height: 1.7rem;
 }
 
 

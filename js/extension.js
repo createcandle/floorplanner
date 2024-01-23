@@ -30,100 +30,16 @@
             this.content = '';
 
 			this.revealed = false;
+			
+            
+			/*
+			else {
+                localStorage.setItem('extension-floorplanner-local-settings-only', JSON.stringify(false));
+            }
+			*/
 
 
-
-
-            // Check if screensaver should be active
-            window.API.postJson(
-                `/extensions/${this.id}/api/ajax`, {
-                    'action': 'init'
-                }
-
-            ).then((body) => {
-
-
-                if (typeof body.debug != 'undefined') {
-                    this.debug = body.debug;
-
-                }
-                if (this.debug) {
-                    console.log("floorplanner init response: ", body);
-                }
-                /*
-                // Search URL
-                if(typeof body.search_url != 'undefined'){
-                	window.extension_floorplanner_search_url = body.search_url;
-                	localStorage.setItem("extension_floorplanner_search_url",body.search_url);
-                }
-                
-                
-                // save history
-                if(typeof body.history_length != 'undefined'){
-                	window.extension_floorplanner_history_length = parseInt(body.history_length);
-                	if(body.history_length){
-                		window.extension_floorplanner_recent_urls = localStorage.getItem("extension_floorplanner_recent_urls");
-                		
-                		if(window.extension_floorplanner_recent_urls == null){
-                			window.extension_floorplanner_recent_urls = [];
-                		}
-                		else{
-                			window.extension_floorplanner_recent_urls = JSON.parse(window.extension_floorplanner_recent_urls);
-                		}
-                		if(this.debug){
-                			console.log("floorplanner: window.extension_floorplanner_recent_urls: ",typeof window.extension_floorplanner_recent_urls, window.extension_floorplanner_recent_urls);
-                		}
-                	}
-                	else{
-                		window.extension_floorplanner_recent_urls = [];
-                		localStorage.setItem("extension_floorplanner_recent_urls","[]");
-                	}
-                }
-                
-                
-                // restore tabs
-                if(typeof body.restore_tabs != 'undefined'){
-                	if(body.restore_tabs){
-                		window.extension_floorplanner_restore_tabs = true;
-                		window.extension_floorplanner_restoring_tabs = true;
-                		window.extension_floorplanner_open_tabs = localStorage.getItem("extension_floorplanner_open_tabs");
-                		if(window.extension_floorplanner_open_tabs == null){
-                			window.extension_floorplanner_open_tabs = [];
-                		}
-                		else{
-                			window.extension_floorplanner_open_tabs = JSON.parse(window.extension_floorplanner_open_tabs);
-                		}
-                	}
-                	else{
-                		window.extension_floorplanner_open_tabs = [];
-                		localStorage.setItem("extension_floorplanner_open_tabs","[]");
-                	}
-                }
-                if(this.debug){
-                	console.log("floorplanner: window.extension_floorplanner_restore_tabs: ", window.extension_floorplanner_restore_tabs);
-                }
-                
-                // fullscreen delay
-                if(typeof body.fullscreen_delay != 'undefined'){
-                	window.extension_floorplanner_fullscreen_delay = parseInt(body.fullscreen_delay);
-                	this.fullscreen_delay = parseInt(body.fullscreen_delay) * 1000;
-                }
-                
-                // slideshow
-                if(typeof body.slideshow != 'undefined'){
-                	window.extension_floorplanner_slideshow = body.slideshow;
-                	this.slideshow = body.slideshow;
-                }
-                
-                if(this.debug){
-                	console.log("floorplanner: fullscreen_delay: ", this.fullscreen_delay);
-                }
-                */
-
-
-            }).catch((e) => {
-                console.log("Floorplanner: error in ealy init function: ", e);
-            });
+           
 
 
 
@@ -190,11 +106,33 @@
 	            
 	                floorplan_view_el.appendChild(fp_container_el);
 	                //generate_floorplans_list();
-	                console.log("floorplanner: document.location.pathname ", document.location.pathname);
-					this.revealed = true;
-					setTimeout(() => {
-	                	this.reveal_floorplanner();
-					},1);
+	                //console.log("floorplanner: document.location.pathname ", document.location.pathname);
+					
+					
+		            window.API.postJson(
+		                `/extensions/floorplanner/api/ajax`, {
+		                    'action': 'init'
+		                }
+
+		            ).then((body) => {
+
+		                if (typeof body.debug != 'undefined') {
+		                    this.debug = body.debug;
+
+		                }
+		                if (this.debug) {
+		                    console.log("floorplanner init response: ", body);
+		                }
+						
+						//this.revealed = true;
+					
+						this.reveal_floorplanner(body);
+
+		            }).catch((e) => {
+		                console.log("Floorplanner: error in early init function: ", e);
+		            });
+					
+					
 	            }
 			}
 		}
@@ -231,7 +169,7 @@
 
 
 
-        delete_file(filename) {
+        save_file(filename) {
             //console.log("Deleting file:" + filename);
 
             //const pre = document.getElementById('extension-floorplanner-response-data');
@@ -239,7 +177,7 @@
 			const photo_list = document.getElementById('extension-floorplanner-photo-list');
 
             window.API.postJson(
-                `/extensions/${this.id}/api/delete`, {
+                `/extensions/floorplanner/api/delete`, {
                     'action': 'delete',
                     'filename': filename
                 }
@@ -256,25 +194,60 @@
 
         }
 
-        reveal_floorplanner() {
+        reveal_floorplanner(body = null) {
             console.log("floorplanner: in reveal_floorplanner");
 
-			this.revealed = true;
-			
-            var currently_editing = true;
-            var currently_editing_an_object = false;
-            var currently_cloning_an_object = false;
-            let settings = {
-                'auto_save': true,
-                'multi_line': true,
-                'dark_mode': null,
-				'thing_icons_size':3
-            }
-			// settings.thing_icons_size can be between 1 and 5.
+			if(typeof body == null){
+				console.error("\n\nERROR:\nreveal_floorplanner: no/invalid data from server?  body: ", body);
+				// TODO: show an error to the user that is non-blocking
+				return
+			}
 
+			this.revealed = true; // Avoid starting floorplanner more than once
+			
+			var local_settings_only = false;
+            var currently_editing_an_object = false; // used by UI to remember state
+            var currently_cloning_an_object = false; // used by UI to remember state
+			var skip_first_save_to_floorplans = true; // quick hacky fix which allows users to view a floorplan without immediately losing their edit history.
+			
+			// Currently editing? If true, immediately return to the editor
+			var currently_editing = true;
+            if (localStorage.getItem('extension-floorplanner-currently-editing') != null) {
+                currently_editing = JSON.parse(localStorage.getItem('extension-floorplanner-currently-editing'));
+            } else {
+                localStorage.setItem('extension-floorplanner-currently-editing', JSON.stringify(true));
+            }
+			
+            let current_filename = JSON.parse(localStorage.getItem('extension-floorplanner-current-filename'));
+            if (current_filename != null) {
+                document.getElementById('extension-floorplanner-current-filename').textContent = current_filename;
+            }
+
+
+
+			// FLOORPLANS
+            let floorplans = {};
+			
+			if(typeof body.floorplans != 'undefined'){
+				floorplans = body.floorplans;
+			}
+            else if (localStorage.getItem('extension-floorplanner-floorplans') != null) {
+				console.warn("floorplanner: falling back to floorplans data in browser local storage");
+				floorplans = JSON.parse(localStorage.getItem('extension-floorplanner-floorplans'));
+            }
+			else{
+				console.warn("NO FLOORPLANS DATA AVAILABLE.  body: ", body);
+			}
+			console.log("initial floorplans: ", floorplans);
+
+
+			// VISIBLE THINGS
 			var visible_things = {};
-            if (localStorage.getItem('extension-floorplanner-visible-things') != null) {
-				console.log("floorplanner: spotted visible_things info in browser local storage");
+			if(typeof body.visible_things != 'undefined'){
+				visible_things = body.visible_things;
+			}
+            else if (localStorage.getItem('extension-floorplanner-visible-things') != null) {
+				console.warn("floorplanner: falling back to visible_things data in browser local storage");
 				try{
 					visible_things = JSON.parse(localStorage.getItem('extension-floorplanner-visible-things'));
 				}
@@ -283,31 +256,43 @@
 					visible_things = {};
 				}
             }
+			
 			console.log("initial visible_things: ", visible_things);
-
-			var skip_first_save_to_floorplans = true; // quick hacky fix which allows users to view a floorplan without immediately losing their edit history.
-
-            if (localStorage.getItem('extension-floorplanner-settings') != null) {
-                settings = JSON.parse(localStorage.getItem('extension-floorplanner-settings'));
-                load_floorplanner_settings();
-            }
-
-
-            if (localStorage.getItem('extension-floorplanner-currently-editing') != null) {
-                currently_editing = JSON.parse(localStorage.getItem('extension-floorplanner-currently-editing'));
-            } else {
-                localStorage.setItem('extension-floorplanner-currently-editing', JSON.stringify(true));
-            }
-            //console.log("currently_editing: ", typeof currently_editing, currently_editing);
-
-            let current_filename = JSON.parse(localStorage.getItem('extension-floorplanner-current-filename'));
-            if (current_filename != null) {
-                document.getElementById('extension-floorplanner-current-filename').textContent = current_filename;
-            }
-            //console.log("current_filename: ", current_filename);
-
 			// Set initial CSS that hides things from specific floorplans
 			update_thing_styles();
+
+
+
+			// SETTINGS
+			
+            let settings = {
+                'auto_save': true,
+                'multi_line': true,
+                'dark_mode': null,
+				'thing_icons_size':3
+            }
+			// settings.thing_icons_size can be between 1 and 5.
+			
+            if (localStorage.getItem('extension-floorplanner-local-settings-only') != null) {
+                local_settings_only = JSON.parse(localStorage.getItem('extension-floorplanner-local-settings-only'));
+            }
+			
+			if(local_settings_only == false && typeof body.settings != 'undefined' && body.settings != null){
+				settings = body.settings;
+			}
+			else if (localStorage.getItem('extension-floorplanner-settings') != null) {
+				settings = JSON.parse(localStorage.getItem('extension-floorplanner-settings'));
+			}
+            load_floorplanner_settings();
+
+
+            
+            //console.log("currently_editing: ", typeof currently_editing, currently_editing);
+
+            
+            //console.log("current_filename: ", current_filename);
+
+
 			
 
             let tactile = false;
@@ -347,12 +332,7 @@
             }
 
 
-            let floorplans = JSON.parse(localStorage.getItem('extension-floorplanner-floorplans'));
-            if (floorplans == null) {
-                floorplans = {};
-            } else {
-                //console.log("FLOORPLANS FROM LOCAL STORAGE: ", floorplans);
-            }
+            
 
 
             let bounding_padding = -10;
@@ -5495,7 +5475,7 @@
             // **************************************************************************
 
             function initHistory(boot = false) {
-                //console.log("in initHistory. boot,current_filename: ", boot, current_filename);
+                console.log("in initHistory. boot,current_filename: ", boot, current_filename);
 
                 //clear_floorplan();
 
@@ -5507,10 +5487,12 @@
                         clear_floorplan(true,true);
                         current_filename = new_floorplan_name;
                         localStorage.setItem('extension-floorplanner-current-filename', JSON.stringify(new_floorplan_name));
-                        document.getElementById('extension-floorplanner-newFileModal').style.display = 'none';
+                        newFileModal.style.display = 'none';
+						document.getElementById('extension-floorplanner-modal-new-floorplan-name-input').style.border = 'none';
 
                     } else if (boot !== "recovery") {
-                        alert("Please provide a valid floorplan name");
+                        //alert("Please provide a valid floorplan name");
+						document.getElementById('extension-floorplanner-modal-new-floorplan-name-input').style.border = '2px dashed red';
                         return
                     }
 
@@ -9152,7 +9134,7 @@
                 } else {
                     document.getElementById('extension-floorplanner-plan-exists-warning').style.display = 'none';
                 }
-                document.querySelector('#extension-floorplanner-newFileModal').style.display = 'block';
+                newFileModal.style.display = 'block';
             }
 
 
@@ -9265,15 +9247,13 @@
                         localStorage.removeItem('extension-floorplanner-current-filename');
                         clear_floorplan(true);
                         document.getElementById('extension-floorplanner-current-filename').textContent = '';
-                        generate_floorplans_list();
+                        //generate_floorplans_list();
                     }
 
-                    if (floorplans.length == 0) {
-                        //console.log("all floorplans have been deleted");
-                    } else {
-                        console.warn('cannot delete, no current_filename');
-                        //floorplans[floorplans.length-1];
-                    }
+                    if (floorplans.length === 0) {
+                        console.log("all floorplans have been deleted");
+						new_floorplan();
+                    } 
                     generate_floorplans_list(true);
                 }
             }
@@ -9328,7 +9308,7 @@
                     localStorage.setItem('extension-floorplanner-current-filename', JSON.stringify(current_filename));
 
                     generate_floorplans_list();
-
+					save_floorplans_to_controller();
 
                 }
                 /*
@@ -9345,6 +9325,135 @@
 			if (HISTORY.index > 1) document.querySelector('#extension-floorplanner-undo').classList.remove('extension-floorplanner-disabled');
 			    */
             }
+			
+			
+			const get_init = () => {
+				
+	            window.API.postJson(
+	                `/extensions/floorplanner/api/ajax`, {
+	                    'action': 'init'
+	                }
+					
+	            ).then((body) => {
+	                //console.log(body);
+	                parse_server_response(body);
+
+	            }).catch((e) => {
+	                console.log("Floorplanner: caught error in get_init response: ", e);
+	                //alert("Could not get floorplanner data - connection error?");
+	            });
+			}
+			
+			const save_floorplans_to_controller = () => {
+				console.log("in save_floorplans_to_controller. this.debug: ", this.debug);
+				
+	            window.API.postJson(
+	                `/extensions/floorplanner/api/ajax`, {
+	                    'action': 'save',
+						'floorplans':floorplans
+	                }
+					
+	            ).then((body) => {
+					if(this.debug){
+						console.log("Floorplanner: debug: save floorplans response: ", body);
+					}
+	                //console.log(body);
+	                //this.parse_server_response(body);
+
+	            }).catch((e) => {
+	                console.log("Floorplanner: caught error in save floorplans response: ", e);
+	                //alert("Could not get floorplanner data - connection error?");
+	            });
+			}
+			
+			
+			const save_visible_things_to_controller = () => {
+				
+	            window.API.postJson(
+	                `/extensions/floorplanner/api/ajax`, {
+	                    'action': 'save',
+						'visible_things':visible_things
+	                }
+					
+	            ).then((body) => {
+					if(this.debug){
+						console.log("Floorplanner: debug: save visible_things response: ", body);
+					}
+	                //console.log(body);
+	                //this.parse_server_response(body);
+
+	            }).catch((e) => {
+	                console.log("Floorplanner: caught error in save visible_things response: ", e);
+	                //alert("Could not get floorplanner data - connection error?");
+	            });
+			}
+			
+			const save_settings_to_controller = () => {
+				if(local_settings_only == false){
+		            window.API.postJson(
+		                `/extensions/floorplanner/api/ajax`, {
+		                    'action': 'save',
+							'settings':settings
+		                }
+					
+		            ).then((body) => {
+						if(this.debug){
+							console.log("Floorplanner: debug: save visible_things response: ", body);
+						}
+		                //console.log(body);
+		                //this.parse_server_response(body);
+					
+		            }).catch((e) => {
+		                console.log("Floorplanner: caught error in save visible_things response: ", e);
+		                //alert("Could not get floorplanner data - connection error?");
+		            });
+				}
+	            
+			}
+			
+
+			// A general api response parser
+			const parse_server_response = (body) => {
+				try{
+				
+					if(typeof body.debug != 'undefined'){
+						this.debug = body.debug;
+					}
+				
+	                if (this.debug) {
+	                    console.log("floorplanner: parsing response: ", body);
+	                }
+				
+					// printer
+	                /*
+					if (typeof body.peripage_printer_available != 'undefined' && typeof body.cups_printer_available != 'undefined') {
+	                    this.peripage_printer_available = body.peripage_printer_available;
+						this.cups_printer_available = body.cups_printer_available;
+	                }
+					*/
+					
+					// visible things
+	                if (typeof body.visible_things != 'undefined') {
+	                    visible_things = body.peripage_printer_available;
+	                }
+					
+					// floorplans
+	                if (typeof body.floorplans != 'undefined') {
+	                    floorplans = body.floorplans;
+	                }
+					
+					// settings
+	                if (typeof body.settings != 'undefined' && local_settings_only === false)  {
+	                    settings = body.settings;
+	                }
+					
+				}
+				catch(e){
+					console.error("floorplanner: caught error parsing server response: ", e);
+				}
+			}
+
+
 
 
             function save_floorplan_as() {
@@ -9670,6 +9779,7 @@
                     icon_index++;
                 }
                 localStorage.setItem('extension-floorplanner-floorplans', JSON.stringify(floorplans));
+				save_floorplans_to_controller();
             }
 
 
@@ -9841,6 +9951,11 @@
                 panel_el.style.display = 'block';
             }
 
+			document.getElementById('extension-floorplanner-local-settings-only-checkbox').addEventListener('change', () => {
+                local_settings_only = document.getElementById('extension-floorplanner-auto-save-checkbox').checked;
+                save_floorplanner_settings();
+            }, true);
+
             document.getElementById('extension-floorplanner-auto-save-checkbox').addEventListener('change', () => {
                 settings.auto_save = document.getElementById('extension-floorplanner-auto-save-checkbox').checked;
                 save_floorplanner_settings();
@@ -9864,21 +9979,27 @@
 
 
             function load_floorplanner_settings() {
-				
+				if(typeof settings == 'undefined' || settings == null){
+					console.error("load_floorplanner_settings: invalid settings data: ", settings);
+					return
+				}
 				if(typeof settings.thing_icons_size != 'number'){
 					console.warn("settings.thing_icons_size was not a number: ", settings.thing_icons_size);
 					settings.thing_icons_size = 3;
 				}
 				
+				document.getElementById('extension-floorplanner-local-settings-only-checkbox').checked = local_settings_only;
                 document.getElementById('extension-floorplanner-auto-save-checkbox').checked = settings.auto_save;
                 document.getElementById('extension-floorplanner-multi').checked = settings.multi_line;
 				document.getElementById('extension-floorplanner-thing-icons-size').value = settings.thing_icons_size;
 				
 				set_thing_icon_scale(settings.thing_icons_size);
+				
             }
 
             function save_floorplanner_settings() {
                 localStorage.setItem('extension-floorplanner-settings', JSON.stringify(settings));
+				save_settings_to_controller();
             }
 
 
@@ -9922,6 +10043,25 @@
 
                 if (document.body.classList.contains('cups-printing')) {
                     // send svg to Candle backend to print
+					
+					if(current_filename != null && typeof floorplans[current_filename] != 'undefined' && && typeof floorplans[current_filename].svg_data != 'undefined'){
+			            console.log("printing SVG via controller: ", floorplans[current_filename].svg_data);
+						window.API.postJson(
+			                `/extensions/floorplanner/api/ajax`, {
+			                    'action': 'print',
+			                    'svg': floorplans[current_filename].svg_data
+			                }
+
+			            ).then((body) => {
+							console.log("floorplanner: print response: ", body);
+			                //console.log(body);
+			                //this.show_list(body['data']);
+
+			            }).catch((e) => {
+			                console.log("Floorplanner: caught error sending print command: ", e);
+			            });
+					}
+					
                 } else if (document.body.classList.contains('kiosk')) {
                     // heck, try to print? Or show a warning that printing is not possible from the kiosk?
                     //window.print();
@@ -10200,15 +10340,15 @@
 				else{	
 					
 			        let all_things = document.querySelectorAll('#floorplan .floorplan-thing');
-					console.log("all_things: ", all_things);
+					//console.log("all_things: ", all_things);
 					
 					let css_filename = makeSafeForCSS(current_filename);
-					console.log("current_filename -> css filename: ", current_filename, ' -> ',css_filename);
+					//console.log("current_filename -> css filename: ", current_filename, ' -> ',css_filename);
 					
 					// Remove old filename class if it exists, and set current floorplan css class
 					floorplan_view_el.classList.remove.apply(floorplan_view_el.classList, Array.from(floorplan_view_el.classList).filter(v=>v.startsWith('extension-floorplanner-p-')));
 					floorplan_view_el.classList.add('extension-floorplanner-p-' + css_filename);
-					console.log("floorplan_view_el.classList: ", floorplan_view_el.classList);
+					//console.log("floorplan_view_el.classList: ", floorplan_view_el.classList);
 					
 					//let cleaned_things = {};
 					let messy_things = {};
@@ -10247,7 +10387,7 @@
 						thing_label_el.setAttribute('for',css_name);
 					
 						thing_checkbox_el.addEventListener('change', (event) => {
-	                		console.log("checkbox changed: ", thing_checkbox_el.checked, thing_href, thing_title, css_name);
+	                		//console.log("checkbox changed: ", thing_checkbox_el.checked, thing_href, thing_title, css_name);
 						
 							if(current_filename != null){
 								if(typeof visible_things[css_filename] == 'undefined'){
@@ -10260,7 +10400,7 @@
 								}
 								localStorage.setItem('extension-floorplanner-visible-things', JSON.stringify(visible_things));
 								update_thing_styles();
-								
+								save_visible_things_to_controller();
 							}
 						
 	            		});
@@ -10367,11 +10507,23 @@
                 generate_floorplans_list();
                 root_el.classList.remove('extension-floorplanner-view-mode');
 				floorplan_view_el.classList.add('extension-floorplanner-edit-mode');
-                if (localStorage.getItem('extension-floorplanner-history')) {
+                
+				if(Object.keys(floorplans).length){
+                    if (current_filename != null && typeof floorplans[current_filename] != 'undefined') {
+                        load_from_floorplans( floorplans[current_filename] );
+                    }
+					else{
+						current_filename = Object.keys(floorplans)[0];
+						localStorage.setItem('extension-floorplanner-current-filename', JSON.stringify(current_filename));
+						load_from_floorplans( floorplans[current_filename] );
+					}
+				}
+				else if (current_filename != null && localStorage.getItem('extension-floorplanner-history')) {
                     setTimeout(() => {
                         initHistory('recovery');
                     }, 10);
-                } else if (localStorage.getItem('extension-floorplanner-floorplans')) {
+                } 
+				else if (localStorage.getItem('extension-floorplanner-floorplans')) {
                     let temp_floorplans = JSON.parse(localStorage.getItem('extension-floorplanner-floorplans'));
                     //console.log("start_floorplanner: temp_floorplans: ", temp_floorplans);
 
@@ -10401,7 +10553,7 @@
                             newFileModal.style.display = 'block';
                         }
                     } else {
-                        //console.log("temp_floorplans was not an object: ", temp_floorplans);
+                        console.log("temp_floorplans was not an object: ", temp_floorplans);
                         newFileModal.style.display = 'block';
                     }
 
